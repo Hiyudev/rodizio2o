@@ -1,0 +1,6 @@
+- Adapt the monorepo merging
+  - Extension ( React + TS )
+  - Website ( Next + TS )
+    - /
+    - /doc
+  - API ( Next + TS )
