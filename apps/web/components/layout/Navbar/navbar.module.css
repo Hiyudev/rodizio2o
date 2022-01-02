@@ -11,12 +11,15 @@
 }
 
 .navmenu {
-	@apply flex justify-center items-center sm:hidden
+	@apply flex justify-center items-center sm:hidden;
 }
 
-
 .mobile {
-	@apply fixed top-0 h-full right-0 z-50 p-4 bg-white dark:bg-gray-800 space-y-8;
+	@apply fixed top-0 h-full right-0 z-50 p-4 bg-white space-y-8 shadow-2xl shadow-indigo-500/50;
+}
+
+:global(.dark) .mobile {
+	@apply bg-gray-800 text-white;
 }
 
 .mobilemenu {

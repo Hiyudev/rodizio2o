@@ -9,7 +9,3 @@
 .content {
 	@apply flex flex-col space-y-8 justify-center;
 }
-
-.title {
-	@apply text-black dark:text-white;
-}

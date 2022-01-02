@@ -1,6 +1,10 @@
 .page {
-	@apply h-screen px-4 py-8 sm:px-8 md:px-12 lg:px-32 bg-slate-100 dark:bg-gray-800;
+	@apply h-screen px-4 py-8 sm:px-8 md:px-12 lg:px-32 bg-gray-100;
 	@apply flex flex-col justify-center;
+}
+
+:global(.dark) .page {
+	@apply bg-gray-800;
 }
 
 .list {
@@ -8,5 +12,9 @@
 }
 
 .item {
-	@apply flex flex-row items-center space-x-4 p-5 bg-white dark:bg-gray-900 rounded-3xl;
+	@apply flex flex-row items-center space-x-4 p-5 bg-white rounded-3xl;
+}
+
+:global(.dark) .item {
+	@apply bg-gray-900;
 }

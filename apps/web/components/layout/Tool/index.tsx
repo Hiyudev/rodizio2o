@@ -11,9 +11,9 @@ const Tool = () => {
 
 				<div className={s.display}>
 					<div></div>
-					<div className={s["display-info"]}>Água normaliza em</div>
+					<div className={s.info}>Água normaliza em</div>
 					<h1>4h</h1>
-					<p className={s["display-date"]}>Acaba às 31/11 - 16:00</p>
+					<p className={s.info}>Acaba às 31/11 - 16:00</p>
 				</div>
 
 				<ul className={s.cycle}>

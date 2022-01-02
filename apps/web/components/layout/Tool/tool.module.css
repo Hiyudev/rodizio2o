@@ -3,16 +3,20 @@
 	@apply p-3 sm:p-4 md:p-5 lg:p-8;
 }
 
+:global(.dark) .tool {
+	@apply bg-gray-800;
+}
+
 .display {
 	@apply w-full;
 }
 
-.display-info {
+.info {
 	@apply text-gray-600;
 }
 
-.display-date {
-	@apply text-gray-600;
+:global(.dark) .info {
+	@apply text-gray-400;
 }
 
 .cycle {
