@@ -1,0 +1,7 @@
+.card {
+	@apply p-8 bg-white dark:bg-gray-900 rounded-xl space-x-4;
+}
+
+.example {
+	@apply flex flex-col bg-gray-200 dark:bg-gray-600;
+}
