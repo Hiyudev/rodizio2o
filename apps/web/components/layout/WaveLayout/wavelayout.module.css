@@ -1,0 +1,7 @@
+.wave {
+	@apply text-blue-600 -mb-2;
+}
+
+.section {
+	@apply bg-blue-600 py-2 sm:py-4 md:py-8 px-2 sm:px-4 md:px-8 lg:px-32;
+}

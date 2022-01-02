@@ -1,0 +1,28 @@
+.nav {
+	@apply flex justify-between py-4;
+}
+
+.navlogo {
+	@apply justify-start;
+}
+
+.navlist {
+	@apply hidden sm:flex flex-row space-x-8 items-center font-bold;
+}
+
+.navmenu {
+	@apply flex justify-center items-center sm:hidden
+}
+
+
+.mobile {
+	@apply fixed top-0 h-full right-0 z-50 p-4 bg-white dark:bg-gray-800 space-y-8;
+}
+
+.mobilemenu {
+	@apply flex justify-end;
+}
+
+.mobilelist {
+	@apply space-y-6 font-bold;
+}

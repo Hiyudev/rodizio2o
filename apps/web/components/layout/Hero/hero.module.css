@@ -1,0 +1,7 @@
+.hero {
+	@apply h-auto py-8;
+}
+
+.title {
+	@apply text-center text-black dark:text-white;
+}

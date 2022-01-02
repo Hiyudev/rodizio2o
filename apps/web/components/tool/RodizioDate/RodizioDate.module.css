@@ -1,0 +1,19 @@
+.card {
+	@apply flex flex-row space-x-4;
+}
+
+.date {
+	@apply flex flex-col flex-shrink-0 justify-center items-center border-gray-300 border-r-2 p-2 w-20 h-20;
+}
+
+.day {
+	@apply font-medium text-4xl;
+}
+
+.month {
+	@apply text-gray-600;
+}
+
+.description {
+	@apply py-4 flex-shrink w-full md:w-32;
+}

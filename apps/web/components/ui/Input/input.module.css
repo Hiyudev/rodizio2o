@@ -1,0 +1,4 @@
+.input {
+	@apply p-4 px-6 w-full rounded-full border-2 border-blue-600 bg-slate-200;
+	@apply hover:shadow-2xl focus:shadow-2xl;
+}
