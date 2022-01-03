@@ -1,5 +1,5 @@
 import { getAddress, getSuggestions } from "../lib/api"
-import { getRodizio } from "../lib/rodizio";
+import { getRodizio, getRodizioByCep } from "../lib/rodizio";
 import rodizioHandler from "../pages/api/rodizio";
 import { createMocks } from 'node-mocks-http';
 import staticRodiziohandler from "../pages/api/rodizio/[cep]/[num]";
@@ -18,14 +18,14 @@ describe("Test rodizio API", () => {
 		expect(address).toMatch(/Alameda Presidente Taunay 1720/);
 	})
 
-	it("is going to throw error with invalid cep", () => {
+	it("[With CEP] is going to throw error with invalid cep", () => {
 		expect(() => {
 			expect.assertions(2);
 
 			const invalidCeps = ["80525140", "82140"]
 			for (const cep of invalidCeps) {
 				try {
-					getRodizio(cep, "")
+					getRodizioByCep(cep, "")
 				} catch (error) {
 					expect(error).toBeInstanceOf(TypeError);
 				}
@@ -33,18 +33,35 @@ describe("Test rodizio API", () => {
 		})
 	})
 
-	it("is going to receive the correct data", async () => {
-		const res = await getRodizio("80430042", "1720");
+	it("[With CEP] is going to receive the correct data", async () => {
+		const res = await getRodizioByCep("80430042", "1720");
 
 		expect(res.current).toBeDefined();
 		expect(res.next.length).toBe(4);
 		expect(res.observation).toBeDefined();
 		expect(res.location).toMatch(/Alameda Presidente Taunay 1720/)
 	})
+
+	it("[With Address] is going to receive the correct data", async () => {
+		const res = await getRodizio("Alameda Presidente Taunay 1720, Mercês");
+
+		expect(res.current).toBeDefined();
+		expect(res.next.length).toBe(4);
+		expect(res.observation).toBeDefined();
+		expect(res.location).toMatch(/Alameda Presidente Taunay 1720/)
+	})
+
+	it("[With Address] is going to throw error with invalid address", async () => {
+		try {
+			await getRodizio("Rua Sweet home alabama");
+		} catch (err) {
+			expect(err).toBeInstanceOf(TypeError);
+		}
+	})
 })
 
 describe("Test API Routes", () => {
-	it("is API Route for rodizio data working", async () => {
+	it("is API Route [?cep=...?num=...] for rodizio data working", async () => {
 		const { req, res } = createMocks({
 			method: 'GET',
 			query: {
@@ -59,7 +76,21 @@ describe("Test API Routes", () => {
 		expect(Object.keys(JSON.parse(res._getData()))).toEqual(expect.arrayContaining(['current', 'location', 'next', 'observation']))
 	})
 
-	it("is API Route for rodizio data working", async () => {
+	it("is API Route [?address=...] for rodizio data working", async () => {
+		const { req, res } = createMocks({
+			method: 'GET',
+			query: {
+				address: "Alameda Presidente Taunay 1720, Mercês",
+			},
+		});
+
+		await rodizioHandler(req, res);
+
+		expect(res._getStatusCode()).toBe(200);
+		expect(Object.keys(JSON.parse(res._getData()))).toEqual(expect.arrayContaining(['current', 'location', 'next', 'observation']))
+	})
+
+	it("is API Route [/[cep]/[num]] for rodizio data working", async () => {
 		const { req, res } = createMocks({
 			method: 'GET',
 			query: {
@@ -85,6 +116,9 @@ describe("Test API Routes", () => {
 		await suggestionHandler(req, res);
 
 		expect(res._getStatusCode()).toBe(200);
-		expect(res._getData().length).toBe(1);
+		const data = res._getData();
+
+		expect(data.length).toBe(1);
+		expect(data[0]).toMatch(/Alameda Presidente Taunay 1720/)
 	})
 })
