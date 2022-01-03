@@ -6,19 +6,25 @@ import Hero from "../components/layout/Hero";
 import Navbar from "../components/layout/Navbar";
 import Section from "../components/layout/Section";
 import Button from "../components/ui/Button";
+import { GradientText } from "../components/ui/Text";
 
 const DevPage = () => {
 	return (
 		<Fragment>
 			<Navbar />
 
-			<Hero title="api disponível para desenvolvedores" />
+			<Hero>
+				<h1 className="text-center">
+					<GradientText>api</GradientText> disponível para desenvolvedores
+				</h1>
+			</Hero>
 
 			<ApiSection />
 
 			<Section image={<Developer />}>
 				<h2>
-					é um programador e quer ver ou ajudar o projeto?
+					é um <GradientText>Programador</GradientText> e quer ver ou ajudar o
+					projeto?
 				</h2>
 
 				<p>Acesse o projeto open-source através do github</p>

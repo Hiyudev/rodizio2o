@@ -2,12 +2,15 @@ import Clock from "../../icons/Clock";
 import Database from "../../icons/Database";
 import Droplet from "../../icons/Droplet";
 import Reflesh from "../../icons/Reflesh";
+import { GradientText } from "../../ui/Text";
 import s from "./feature.module.css";
 
 const Feature = () => {
 	return (
 		<div className={s.page}>
-			<h2>Ferramenta que facilita a sua vida</h2>
+			<h2>
+				Ferramenta que <GradientText>facilita</GradientText> a sua vida
+			</h2>
 
 			<ul className={s.list}>
 				<li className={s.item}>

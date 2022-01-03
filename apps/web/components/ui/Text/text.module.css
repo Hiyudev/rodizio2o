@@ -1,0 +1,4 @@
+.textgradient {
+	@apply bg-clip-text text-transparent;
+	@apply bg-gradient-to-tl from-blue-500 via-indigo-600 to-violet-600;
+}
