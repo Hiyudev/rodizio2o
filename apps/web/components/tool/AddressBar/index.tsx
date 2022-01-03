@@ -78,7 +78,7 @@ const AddresBar = () => {
 					</Fragment>
 				);
 		}
-	}, [option]);
+	}, [address, cep, num, option]);
 
 	return (
 		<div className={s.addressbar}>

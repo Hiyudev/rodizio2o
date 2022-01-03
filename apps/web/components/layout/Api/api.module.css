@@ -1,7 +1,12 @@
 .card {
-	@apply p-8 bg-white dark:bg-gray-900 rounded-xl space-x-4;
+	@apply max-w-none !important;
+	@apply w-full p-8 bg-white  rounded-xl space-y-4;
+	@apply prose;
+	@apply prose-h2:font-black prose-h2:uppercase;
+	@apply prose-h3:font-black prose-h3:uppercase;
+	@apply prose-h4:font-black prose-h4:uppercase;
 }
 
-.example {
-	@apply flex flex-col bg-gray-200 dark:bg-gray-600;
+:global(.dark) .card {
+	@apply bg-gray-900 prose-invert;
 }
