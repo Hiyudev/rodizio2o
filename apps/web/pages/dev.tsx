@@ -29,7 +29,7 @@ const DevPage = () => {
 
 				<p>Acesse o projeto open-source através do github</p>
 
-				<a href={"https://google.com"}>
+				<a href={"https://github.com/KeysHD/rodizio2o"}>
 					<Button>Acessar o projeto</Button>
 				</a>
 			</Section>

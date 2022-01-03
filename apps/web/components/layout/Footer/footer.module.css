@@ -1,6 +1,6 @@
 .footer {
 	@apply py-8 px-4 sm:px-8 md:px-12 lg:px-32 bg-slate-800 text-white;
-	@apply flex flex-row justify-between items-center;
+	@apply flex flex-col space-y-4 sm:space-y-0 sm:flex-row justify-between items-center;
 }
 
 .listlinks {
