@@ -3,7 +3,7 @@ import { getRodizio } from "../lib/rodizio";
 import rodizioHandler from "../pages/api/rodizio";
 import { createMocks } from 'node-mocks-http';
 import staticRodiziohandler from "../pages/api/rodizio/[cep]/[num]";
-import suggestionHandler from "../pages/api/suggestion";
+import suggestionHandler from "../pages/api/suggestions";
 
 describe("Test rodizio API", () => {
 	it('is going to get the correct suggestion', async () => {
@@ -85,6 +85,6 @@ describe("Test API Routes", () => {
 		await suggestionHandler(req, res);
 
 		expect(res._getStatusCode()).toBe(200);
-		expect(res._getData()).toMatch(/Alameda Presidente Taunay 1720/)
+		expect(res._getData().length).toBe(1);
 	})
 })
