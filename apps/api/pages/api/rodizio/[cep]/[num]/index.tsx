@@ -1,7 +1,7 @@
 // /api/rodizio/[cep]/[num]
 import Cors from "cors";
 import initMiddleware from "../../../../../lib/middleware";
-import { getRodizio } from "../../../../../lib/rodizio";
+import { getRodizio, getRodizioByCep } from "../../../../../lib/rodizio";
 
 const cors = initMiddleware(
 	Cors({
@@ -9,15 +9,23 @@ const cors = initMiddleware(
 	})
 );
 
-// https://nextjs.org/docs/api-routes/response-helpers
 export default async function staticRodiziohandler(req, res) {
 	await cors(req, res);
 
-	const {
-		query: { cep, num },
-	} = req;
+	const cep = req.query.cep.replaceAll("-", "");
+	const num = req.query.num;
+	let address = req.query.address;
 
-	const apires = await getRodizio(cep, num);
+	let apires;
+	if (!address) {
+		apires = await getRodizioByCep(cep, num);
+	} else {
+		apires = await getRodizio(address);
+	}
 
-	res.json(apires);
+	try {
+		res.status(200).json(apires);
+	} catch (err) {
+		res.status(400).json({ error: err.message });
+	}
 }

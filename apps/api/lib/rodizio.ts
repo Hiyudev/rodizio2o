@@ -39,91 +39,91 @@ function count<T>(array: T[]): { [key: string]: number } {
 	);
 }
 
-export async function getRodizio(
-	cep: string,
-	num: string,
-): Promise<IRodizioAPI> {
-	try {
-		cep = cep.replaceAll("-", "");
-
-		if (cep.length !== 8 || num.length === 0) {
-			throw new TypeError(
-				'CEP ou Número da residência colocadas são inválidas',
-			);
-		}
-
+export async function getRodizioByCep(cep: string, num: string) {
+	if (cep.length !== 8 || num.length === 0) {
+		throw new TypeError("CEP ou Número da residência colocadas são inválidas")
+	} else {
 		const address = await getAddress(cep, num);
-		const suggestions = await getSuggestions(address);
 
-		if (suggestions.length === 0) {
-			throw new TypeError('CEP inválido');
+		try {
+			const data = await getRodizio(address)
+			return data
+		} catch (err) {
+			throw new TypeError(err.message)
 		}
+	}
+}
 
-		const candidates = await findAddress(suggestions[0].text);
-		const location = candidates.candidates[0].location;
-		location.spatialReference = {
-			wkid: 102100,
-		};
+export async function getRodizio(
+	address: string,
+): Promise<IRodizioAPI> {
+	const suggestions = await getSuggestions(address);
 
-		const codope = await getCodope(location);
-		const data = await getByCodope(codope);
+	if (suggestions.length === 0) {
+		throw new TypeError('Endereço inválido');
+	}
 
-		const now = new Date();
-		const filteredData: IRodizioData[] = data.features.filter(
-			(entry: IRodizioData) => {
-				const rodizioDate = new Date(entry.attributes.NORMALIZACAO);
-				const past = TimeSub(now, { month: 1 });
-				return past < rodizioDate;
-			},
-		);
+	const candidates = await findAddress(suggestions[0].text);
+	const location = candidates.candidates[0].location;
+	location.spatialReference = {
+		wkid: 102100,
+	};
 
-		filteredData.sort(function (a: IRodizioData, b: IRodizioData) {
-			return b.attributes.INICIO > a.attributes.INICIO ? 1 : -1;
-		});
+	const codope = await getCodope(location);
+	const data = await getByCodope(codope);
 
-		let observations: string[] = [];
-		const datas: IRodizio[] = filteredData.map(v => {
-			const { INICIO, RETOMADA, NORMALIZACAO, OBSERVACAO } = v.attributes;
+	const now = new Date();
+	const filteredData: IRodizioData[] = data.features.filter(
+		(entry: IRodizioData) => {
+			const rodizioDate = new Date(entry.attributes.NORMALIZACAO);
+			const past = TimeSub(now, { month: 1 });
+			return past < rodizioDate;
+		},
+	);
 
-			observations.push(OBSERVACAO);
+	filteredData.sort(function (a: IRodizioData, b: IRodizioData) {
+		return b.attributes.INICIO > a.attributes.INICIO ? 1 : -1;
+	});
 
-			return {
-				INICIO: INICIO,
-				RETOMADA: RETOMADA,
-				NORMALIZACAO: NORMALIZACAO,
-			};
-		});
+	let observations: string[] = [];
+	const datas: IRodizio[] = filteredData.map(v => {
+		const { INICIO, RETOMADA, NORMALIZACAO, OBSERVACAO } = v.attributes;
 
-
-		const start = new Date(datas[0].INICIO);
-		const end = new Date(datas[0].NORMALIZACAO);
-		const isCurrent = TimeIn(start, end, now);
-
-		let currentRodizio = isCurrent ? datas[0] : null;
-		let currentObservation = observations[0];
-		let nextRestrictions: IRodizio[] = [];
-
-		let fullAddress: string = suggestions[0].text.split(',')[0];
-
-		const nextRodizio = !isCurrent ? datas.shift() : undefined;
-		if (nextRodizio) {
-			nextRestrictions.push(nextRodizio);
-		}
-
-		const lastRestrictions = datas.slice(1, 6);
-		const predictRestriction = analyseRodizio(lastRestrictions);
-		const ref = nextRestrictions[0] ?? datas[0]
-		let nextRodizios: IRodizio[] = predictRodizio(ref, predictRestriction)
+		observations.push(OBSERVACAO);
 
 		return {
-			current: currentRodizio,
-			next: nextRodizios,
-			observation: currentObservation,
-			location: fullAddress
-		}
+			INICIO: INICIO,
+			RETOMADA: RETOMADA,
+			NORMALIZACAO: NORMALIZACAO,
+		};
+	});
 
-	} catch (error: any) {
-		throw new Error(error);
+
+	const start = new Date(datas[0].INICIO);
+	const end = new Date(datas[0].NORMALIZACAO);
+	const isCurrent = TimeIn(start, end, now);
+
+	let currentRodizio = isCurrent ? datas[0] : null;
+	let currentObservation = observations[0];
+	let nextRestrictions: IRodizio[] = [];
+
+	let fullAddress: string = suggestions[0].text.split(',')[0];
+
+	const nextRodizio = !isCurrent ? datas.shift() : undefined;
+	if (nextRodizio) {
+		nextRestrictions.push(nextRodizio);
+	}
+
+	const lastRestrictions = datas.slice(1, 6);
+	const predictRestriction = analyseRodizio(lastRestrictions);
+	const ref = nextRestrictions[0] ?? datas[0]
+	let nextRodizios: IRodizio[] = predictRodizio(ref, predictRestriction)
+
+	return {
+		current: currentRodizio,
+		next: nextRodizios,
+		observation: currentObservation,
+		location: fullAddress
 	}
 }
 
