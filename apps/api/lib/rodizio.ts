@@ -1,4 +1,4 @@
-import { RodizioDate, TimeAdd, TimeIn, Timeleft, TimeSub } from "../utils/date";
+import { TimeAdd, TimeIn, Timeleft, TimeSub } from "../utils/date";
 import { getAddress, getSuggestions, findAddress, getCodope, getByCodope } from "./api";
 
 
