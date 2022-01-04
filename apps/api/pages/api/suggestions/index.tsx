@@ -14,7 +14,7 @@ export default async function suggestionHandler(req, res) {
 
 	const search = req.query.search;
 
-	let suggestions = await (await getSuggestions(search)).slice(0, 3);
+	let suggestions = await getSuggestions(search);
 	let resBody = [];
 	for (const suggestion of suggestions) {
 		resBody.push(suggestion["text"]);
