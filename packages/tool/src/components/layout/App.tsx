@@ -1,12 +1,23 @@
-import { useState } from "react";
-import { RodizioPages } from "../../shared";
+import { useEffect, useState } from "react";
+import useAddress from "../../hooks/useAddress";
+import useRodizio from "../../hooks/useRodizio";
+import { RodizioErrorTypes, RodizioPages } from "../../shared";
 import ToolContainer from "../tool/ToolContainer";
 import ToolConfigPage from "./Config";
 import ToolHomePage from "./Home";
 import ToolListPage from "./List";
 
 export const App = () => {
+	const [address, setAddress] = useAddress();
+	const { rodizio } = useRodizio();
+	const [error, setError] = useState({
+		type: RodizioErrorTypes.None,
+		message: "",
+	});
 	const [page, setPage] = useState(RodizioPages.Home);
+
+	// Sync Rodizio Data with the new Address
+	useEffect(() => {}, [address]);
 
 	const container = () => {
 		switch (page) {
