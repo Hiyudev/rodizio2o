@@ -6,6 +6,7 @@ import ToolContainer from "../tool/ToolContainer";
 import ToolConfigPage from "./Config";
 import ToolHomePage from "./Home";
 import ToolListPage from "./List";
+import Navbar from "./Nav";
 
 export const App = () => {
 	const [address, setAddress] = useAddress();
@@ -19,7 +20,7 @@ export const App = () => {
 	// Sync Rodizio Data with the new Address
 	useEffect(() => {}, [address]);
 
-	const container = () => {
+	const Container = () => {
 		switch (page) {
 			case RodizioPages.Home:
 				return <ToolHomePage />;
@@ -30,5 +31,10 @@ export const App = () => {
 		}
 	};
 
-	return <ToolContainer>{container}</ToolContainer>;
+	return (
+		<ToolContainer>
+			<Navbar currentPage={page} changePage={setPage} />
+			<Container />
+		</ToolContainer>
+	);
 };
