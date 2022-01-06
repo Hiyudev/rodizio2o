@@ -1,6 +1,6 @@
-import useMobile from "../hooks/useMobile";
-import LeftArrowIcon from "../icons/LeftArrow";
-import RightArrowIcon from "../icons/RightArrow";
+import useMobile from "../../hooks/useMobile";
+import LeftArrowIcon from "../../icons/LeftArrow";
+import RightArrowIcon from "../../icons/RightArrow";
 
 interface IToolCycle {
 	children: React.ReactNode;
