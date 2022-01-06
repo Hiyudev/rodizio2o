@@ -21,9 +21,9 @@ function Navbar({ currentPage, changePage }: INav) {
 	const activeClass = "text-blue-400 dark:text-blue-600";
 
 	return (
-		<nav className="flex flex-row justify-end align-middle transition-colors">
+		<nav className="flex flex-row justify-end align-middle p-4">
 			<button
-				className={`flex justify-center hover:text-blue-500 items-center w-[2.5rem] h-[2.5rem] ${
+				className={`flex justify-center hover:text-blue-500 items-center w-[2.5rem] h-[2.5rem] transition-colors ${
 					currentPage === RodizioPages.Home ? activeClass : ""
 				}`}
 				onClick={() => changePage(RodizioPages.Home)}
@@ -31,7 +31,7 @@ function Navbar({ currentPage, changePage }: INav) {
 				<HomeIcon />
 			</button>
 			<button
-				className={`flex justify-center hover:text-blue-500 items-center w-[2.5rem] h-[2.5rem] ${
+				className={`flex justify-center hover:text-blue-500 items-center w-[2.5rem] h-[2.5rem] transition-colors ${
 					currentPage === RodizioPages.List ? activeClass : ""
 				}`}
 				onClick={() => switchPage(RodizioPages.List)}
@@ -39,7 +39,7 @@ function Navbar({ currentPage, changePage }: INav) {
 				<ListIcon />
 			</button>
 			<button
-				className={`flex justify-center hover:text-blue-500 items-center w-[2.5rem] h-[2.5rem] ${
+				className={`flex justify-center hover:text-blue-500 items-center w-[2.5rem] h-[2.5rem] transition-colors ${
 					currentPage === RodizioPages.Config ? activeClass : ""
 				}`}
 				onClick={() => switchPage(RodizioPages.Config)}

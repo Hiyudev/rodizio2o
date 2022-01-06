@@ -42,12 +42,20 @@ interface IRodizioContext {
 	systemStatus: UpdaterState;
 	nextEvent: IEvent;
 	futureEvents: IEvent[];
+	loaded: boolean;
 }
 
 const RodizioContext = createContext({} as IRodizioContext);
 
 export const RodizioWrapper: React.FC = ({ children }) => {
 	const initialValue = {} as IRodizioAPI;
+
+	const [loadedParts, setLoadedParts] = useState(0);
+	const hasLoaded = () => setLoadedParts(loadedParts + 1);
+	const loadTimes = 2;
+	const loaded = useMemo(() => {
+		return loadedParts >= loadTimes;
+	}, [loadedParts]);
 
 	const [rodizio, setRodizio] = useLocalStorage<IRodizioAPI>(
 		"@rodizio",
@@ -112,10 +120,12 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 		eventDate = new Date(date).getTime();
 		eventName = closestCurrentArr?.[0]?.[0] ?? "INICIO";
 
+		hasLoaded();
 		return {
 			data: eventDate,
 			name: eventName,
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [rodizio]);
 
 	const futureEvents: IEvent[] | null = useMemo(() => {
@@ -133,7 +143,9 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 			});
 		});
 
+		hasLoaded();
 		return arr;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [rodizio]);
 
 	const isSuspended: boolean | null = useMemo(() => {
@@ -153,6 +165,7 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 
 		const now = new Date();
 
+		hasLoaded();
 		switch (nextEvent.name) {
 			case "INICIO":
 				const compareDate = TimeSub(new Date(nextEvent.data), { hours: 6 });
@@ -164,6 +177,7 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 			case "NORMALIZACAO":
 				return RodizioState.RESUMING;
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [rodizio, isSuspended, nextEvent]);
 
 	const contextProps = {
@@ -174,6 +188,7 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 		systemStatus,
 		nextEvent,
 		futureEvents,
+		loaded,
 	};
 
 	return (

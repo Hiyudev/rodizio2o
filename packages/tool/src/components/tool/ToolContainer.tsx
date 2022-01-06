@@ -1,7 +1,5 @@
 function ToolContainer({ children }) {
-	return (
-		<main className="w-full bg-gray-200 dark:bg-gray-800">{children}</main>
-	);
+	return <div className="w-full bg-gray-200 dark:bg-gray-800">{children}</div>;
 }
 
 export default ToolContainer;
