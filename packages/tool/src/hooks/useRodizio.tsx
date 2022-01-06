@@ -1,14 +1,19 @@
-import { useMemo, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 import { isObjectEmpty } from "../lib/Object";
 import { TimeIn, TimeSub } from "../lib/Time";
-import { RodizioErrorTypes, RodizioState, UpdaterState } from "../shared";
+import {
+	IEvent,
+	RodizioErrorTypes,
+	RodizioState,
+	UpdaterState,
+} from "../shared";
 import useLocalStorage from "./useLocalStorage";
 
 export interface IRodizio {
-	[key: string]: Date;
-	INICIO: Date;
-	RETOMADA: Date;
-	NORMALIZACAO: Date;
+	[key: string]: number;
+	INICIO: number;
+	RETOMADA: number;
+	NORMALIZACAO: number;
 }
 
 export interface IRodizioAPI {
@@ -16,11 +21,6 @@ export interface IRodizioAPI {
 	next: IRodizio[];
 	location: string;
 	observation: null | string;
-}
-
-interface IEvent {
-	data: Date;
-	name: string;
 }
 
 interface IUpdateRodizio {
@@ -34,7 +34,7 @@ interface IRodizioError {
 	message: string;
 }
 
-const useRodizio = (): {
+interface IRodizioContext {
 	rodizio: IRodizioAPI;
 	rodizioStatus: RodizioState;
 	rodizioError: IRodizioError;
@@ -42,7 +42,11 @@ const useRodizio = (): {
 	systemStatus: UpdaterState;
 	nextEvent: IEvent;
 	futureEvents: IEvent[];
-} => {
+}
+
+const RodizioContext = createContext({} as IRodizioContext);
+
+export const RodizioWrapper: React.FC = ({ children }) => {
 	const initialValue = {} as IRodizioAPI;
 
 	const [rodizio, setRodizio] = useLocalStorage<IRodizioAPI>(
@@ -94,18 +98,18 @@ const useRodizio = (): {
 		if (isObjectEmpty(rodizio)) return null;
 
 		let eventName = "";
-		let eventDate: Date;
+		let eventDate: number;
 
 		const closestCurrentArr =
 			rodizio?.current &&
 			Object.entries(rodizio.current).filter(
-				(d) => d[1].getTime() < new Date().getTime()
+				(d) => d[1] < new Date().getTime()
 			);
 
 		const closestNextArr = rodizio?.next[0].INICIO;
 
 		let date = closestCurrentArr?.[0]?.[1] ?? closestNextArr;
-		eventDate = new Date(date);
+		eventDate = new Date(date).getTime();
 		eventName = closestCurrentArr?.[0]?.[0] ?? "INICIO";
 
 		return {
@@ -151,8 +155,8 @@ const useRodizio = (): {
 
 		switch (nextEvent.name) {
 			case "INICIO":
-				const compareDate = TimeSub(nextEvent.data, { hours: 6 });
-				const inRange = TimeIn(compareDate, nextEvent.data, now);
+				const compareDate = TimeSub(new Date(nextEvent.data), { hours: 6 });
+				const inRange = TimeIn(compareDate, new Date(nextEvent.data), now);
 				if (inRange) return RodizioState.SOON;
 				else return RodizioState.AVAILABLE;
 			case "RETOMADA":
@@ -162,7 +166,7 @@ const useRodizio = (): {
 		}
 	}, [rodizio, isSuspended, nextEvent]);
 
-	return {
+	const contextProps = {
 		rodizio,
 		rodizioStatus,
 		rodizioError,
@@ -171,6 +175,14 @@ const useRodizio = (): {
 		nextEvent,
 		futureEvents,
 	};
+
+	return (
+		<RodizioContext.Provider value={contextProps}>
+			{children}
+		</RodizioContext.Provider>
+	);
 };
 
-export default useRodizio;
+export function useRodizio() {
+	return useContext(RodizioContext);
+}

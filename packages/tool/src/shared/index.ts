@@ -26,3 +26,8 @@ export enum UpdaterState {
 	INITIALIZING,
 	ERROR,
 }
+
+export interface IEvent {
+	data: number;
+	name: string;
+}
