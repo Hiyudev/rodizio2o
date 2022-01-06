@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useReducer, useState } from "react";
+import { Fragment, useMemo, useReducer } from "react";
 import useKeyPress from "../../hooks/useKeyPress";
 import useScreenSize from "../../hooks/useMobile";
 import LeftArrowIcon from "../../icons/LeftArrow";
@@ -12,7 +12,7 @@ interface IToolCycle {
 	list: IEvent[];
 }
 function ToolCycle({ loaded, list }: IToolCycle) {
-	const { isMobile, isTablet } = useScreenSize();
+	const { isTablet } = useScreenSize();
 
 	const groups = useMemo(() => {
 		if (!list) return;
@@ -69,7 +69,7 @@ function ToolCycle({ loaded, list }: IToolCycle) {
 			if (loaded) {
 				return (
 					<Fragment>
-						{renderList?.map((v, i) => {
+						{renderList.map((v, i) => {
 							return (
 								<ToolDate
 									key={i}

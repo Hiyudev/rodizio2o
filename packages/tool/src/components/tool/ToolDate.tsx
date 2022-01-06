@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { capitalizeFirstLetter } from "../../lib/String";
 
 const MonthConvert = (month: number): string => {
 	const monthNames = [
@@ -39,6 +39,7 @@ const ToolDate: React.FC<IToolDateProps> = ({
 	const monthName = MonthConvert(month).slice(0, 3);
 
 	const day = eventDate.getDate();
+	const name = capitalizeFirstLetter(eventName);
 
 	return (
 		<div
@@ -52,7 +53,7 @@ const ToolDate: React.FC<IToolDateProps> = ({
 			</div>
 
 			<div className="p-4 flex-shrink rounded-2xl w-full md:w-32">
-				<span>{eventName}</span>
+				<span>{name}</span>
 				<br />
 				<span className="text-gray-600 dark:text-gray-400">{time}</span>
 			</div>
