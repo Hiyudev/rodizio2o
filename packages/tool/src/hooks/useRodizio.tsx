@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { isObjectEmpty } from "../lib/Object";
 import { TimeIn, TimeSub } from "../lib/Time";
 import { RodizioErrorTypes, RodizioState, UpdaterState } from "../shared";
@@ -104,9 +104,9 @@ const useRodizio = (): {
 
 		const closestNextArr = rodizio?.next[0].INICIO;
 
-		let date = closestCurrentArr[0][1] ?? closestNextArr;
+		let date = closestCurrentArr?.[0]?.[1] ?? closestNextArr;
 		eventDate = new Date(date);
-		eventName = closestCurrentArr[0][0] ?? "INICIO";
+		eventName = closestCurrentArr?.[0]?.[0] ?? "INICIO";
 
 		return {
 			data: eventDate,
@@ -144,7 +144,7 @@ const useRodizio = (): {
 	}, [rodizio]);
 
 	const rodizioStatus = useMemo(() => {
-		if (isObjectEmpty(rodizio)) return RodizioState.NOTFOUND;
+		if (isObjectEmpty(rodizio) && !nextEvent) return RodizioState.NOTFOUND;
 		if (isSuspended) return RodizioState.SUSPENDED;
 
 		const now = new Date();
@@ -160,7 +160,7 @@ const useRodizio = (): {
 			case "NORMALIZACAO":
 				return RodizioState.RESUMING;
 		}
-	}, [rodizio, isSuspended, nextEvent.name, nextEvent.data]);
+	}, [rodizio, isSuspended, nextEvent]);
 
 	return {
 		rodizio,
