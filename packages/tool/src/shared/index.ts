@@ -31,3 +31,9 @@ export interface IEvent {
 	data: number;
 	name: string;
 }
+
+export interface IAddress {
+	cep: string;
+	num: string;
+	street: string;
+}

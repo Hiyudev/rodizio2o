@@ -18,7 +18,7 @@ function Navbar({ currentPage, changePage }: INav) {
 		}
 	};
 
-	const activeClass = "text-blue-400 dark:text-blue-600";
+	const activeClass = "dark:text-blue-400 text-blue-600";
 
 	return (
 		<nav className="flex flex-row justify-end align-middle p-4">

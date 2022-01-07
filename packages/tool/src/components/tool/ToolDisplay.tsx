@@ -11,7 +11,6 @@ interface IToolDisplay {
 function ToolDisplay({ loaded, event, status }: IToolDisplay) {
 	const now = new Date();
 	const nextDate = loaded && new Date(event?.data);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const nextLeftObj = loaded && Timeleft(now, nextDate);
 	const nextLeft = nextLeftObj.days * 24 + nextLeftObj.hours;
 
@@ -51,7 +50,7 @@ function ToolDisplay({ loaded, event, status }: IToolDisplay) {
 	return (
 		<div>
 			{loaded ? (
-				<div>
+				<div className="text-center">
 					<p>{message.title}</p>
 					<h1>{nextLeft}h</h1>
 					<small>

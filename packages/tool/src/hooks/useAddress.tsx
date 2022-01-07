@@ -1,11 +1,8 @@
+import { Dispatch, SetStateAction } from "react";
+import { IAddress } from "../shared";
 import useLocalStorage from "./useLocalStorage";
-interface IAddress {
-	cep: string;
-	num: string;
-	street: string;
-}
 
-const useAddress = (): [IAddress, (key: string, value: string) => void] => {
+const useAddress = (): [IAddress, Dispatch<SetStateAction<IAddress>>] => {
 	const initialValue: IAddress = {
 		cep: "",
 		num: "",
@@ -16,11 +13,7 @@ const useAddress = (): [IAddress, (key: string, value: string) => void] => {
 		initialValue
 	);
 
-	const changeAddress = (key: string, value: string) => {
-		setAddress({ ...address, [key]: value });
-	};
-
-	return [address, changeAddress];
+	return [address, setAddress];
 };
 
 export default useAddress;
