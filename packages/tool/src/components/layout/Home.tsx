@@ -1,17 +1,13 @@
 import { useRodizio } from "../../hooks/useRodizio";
 import ToolCycle from "../tool/ToolCycle";
-import ToolDate from "../tool/ToolDate";
+import ToolDisplay from "../tool/ToolDisplay";
 
 function ToolHomePage() {
-	const { futureEvents, loaded } = useRodizio();
+	const { nextEvent, futureEvents, loaded, rodizioStatus } = useRodizio();
 
 	return (
-		<div>
-			<div>
-				<p>Água normaliza em</p>
-				<h2>4h</h2>
-				<small>Acaba às 31/11 - 16:00</small>
-			</div>
+		<div className="space-y-8">
+			<ToolDisplay loaded={loaded} event={nextEvent} status={rodizioStatus} />
 
 			<ToolCycle loaded={loaded} list={futureEvents} />
 		</div>
