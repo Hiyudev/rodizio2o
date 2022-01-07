@@ -65,13 +65,13 @@ export const ToolDateSkeleton = () => {
 	return (
 		<div className={"flex flex-row snap-start rounded-2xl w-full"}>
 			<div className="flex flex-col flex-shrink-0 justify-center items-center border-gray-600 dark:border-gray-300 border-r-2 p-4 w-20 h-20">
-				<div className="font-medium h-8 w-full bg-black dark:bg-white rounded-full animate-pulse"></div>
-				<div className="font-medium h-[1.875rem] w-full mt-3 bg-gray-600 dark:bg-gray-400 rounded-full animate-pulse"></div>
+				<div className="h-8 w-full bg-black dark:bg-white rounded-full animate-pulse"></div>
+				<div className="h-[1.875rem] w-full mt-3 bg-gray-600 dark:bg-gray-400 rounded-full animate-pulse"></div>
 			</div>
 
 			<div className="p-4 flex-shrink rounded-2xl w-full md:w-32">
-				<div className="font-medium h-[1.188rem] w-15 bg-black dark:bg-white rounded-full animate-pulse"></div>
-				<div className="font-medium h-4 mt-3 w-1/2 bg-gray-600 dark:bg-gray-400 rounded-full animate-pulse"></div>
+				<div className="h-[1.188rem] w-15 bg-black dark:bg-white rounded-full animate-pulse"></div>
+				<div className="h-4 mt-3 w-1/2 bg-gray-600 dark:bg-gray-400 rounded-full animate-pulse"></div>
 			</div>
 		</div>
 	);
