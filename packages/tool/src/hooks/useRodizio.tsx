@@ -50,13 +50,6 @@ const RodizioContext = createContext({} as IRodizioContext);
 export const RodizioWrapper: React.FC = ({ children }) => {
 	const initialValue = {} as IRodizioAPI;
 
-	const [loadedParts, setLoadedParts] = useState(0);
-	const hasLoaded = () => setLoadedParts(loadedParts + 1);
-	const loadTimes = 2;
-	const loaded = useMemo(() => {
-		return loadedParts >= loadTimes;
-	}, [loadedParts]);
-
 	const [rodizio, setRodizio] = useLocalStorage<IRodizioAPI>(
 		"@rodizio",
 		initialValue
@@ -71,7 +64,13 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 		UpdaterState.INITIALIZING
 	);
 
+	const loaded = useMemo(() => {
+		return systemStatus === UpdaterState.DONE;
+	}, [systemStatus]);
+
 	const updateRodizio = ({ cep, num, street }: IUpdateRodizio) => {
+		if (systemStatus === UpdaterState.UPDATING) return;
+
 		setSystemStatus(UpdaterState.UPDATING);
 
 		let url: string;
@@ -120,7 +119,6 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 		eventDate = new Date(date).getTime();
 		eventName = closestCurrentArr?.[0]?.[0] ?? "INICIO";
 
-		hasLoaded();
 		return {
 			data: eventDate,
 			name: eventName,
@@ -143,7 +141,6 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 			});
 		});
 
-		hasLoaded();
 		return arr;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [rodizio]);
@@ -157,7 +154,8 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 		} else {
 			return false;
 		}
-	}, [rodizio]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [rodizio.observation]);
 
 	const rodizioStatus = useMemo(() => {
 		if (isObjectEmpty(rodizio) && !nextEvent) return RodizioState.NOTFOUND;
@@ -165,7 +163,6 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 
 		const now = new Date();
 
-		hasLoaded();
 		switch (nextEvent.name) {
 			case "INICIO":
 				const compareDate = TimeSub(new Date(nextEvent.data), { hours: 6 });
