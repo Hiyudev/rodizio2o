@@ -42,6 +42,7 @@ function ToolAddressBar({ error, setError }: IToolAddressBar) {
 
 			setError(error.length > 0 ? error : message);
 		} else {
+			setError("");
 			setAddress(debounceInputValues);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
