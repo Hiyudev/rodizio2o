@@ -7,7 +7,7 @@ import { TimeAdd } from "../../lib/Time";
 import { IAddress, UpdaterState } from "../../shared";
 
 function ToolContainer({ children }) {
-	const { updateRodizio, systemStatus } = useRodizio();
+	const { updateRodizio, renderRodizio, systemStatus } = useRodizio();
 	const [address] = useAddress();
 
 	const [lastUpdate, setLastUpdate] = useLocalStorage<Date>(
@@ -32,6 +32,8 @@ function ToolContainer({ children }) {
 			updateRodizio(address);
 			setLastUpdate(selfUpdate);
 			setLastAddress(address);
+		} else {
+			renderRodizio();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [address]);

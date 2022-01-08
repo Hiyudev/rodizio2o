@@ -39,6 +39,7 @@ interface IRodizioContext {
 	rodizioStatus: RodizioState;
 	rodizioError: IRodizioError;
 	updateRodizio: ({ cep, num, street }: IUpdateRodizio) => void;
+	renderRodizio: () => void;
 	systemStatus: UpdaterState;
 	nextEvent: IEvent;
 	futureEvents: IEvent[];
@@ -100,6 +101,8 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 				});
 		}
 	};
+
+	const renderRodizio = () => setSystemStatus(UpdaterState.DONE);
 
 	const nextEvent: IEvent | null = useMemo(() => {
 		if (isObjectEmpty(rodizio)) return null;
@@ -182,6 +185,7 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 		rodizioStatus,
 		rodizioError,
 		updateRodizio,
+		renderRodizio,
 		systemStatus,
 		nextEvent,
 		futureEvents,
