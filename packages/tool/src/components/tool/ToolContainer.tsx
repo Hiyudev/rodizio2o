@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import useAddress from "../../hooks/useAddress";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import useMode from "../../hooks/useMode";
 import { useRodizio } from "../../hooks/useRodizio";
 import { isObjectSame } from "../../lib/Object";
 import { TimeAdd } from "../../lib/Time";
-import { IAddress, UpdaterState } from "../../shared";
+import { IAddress, Modes, UpdaterState } from "../../shared";
 
 function ToolContainer({ children }) {
 	const { updateRodizio, renderRodizio, systemStatus } = useRodizio();
@@ -22,6 +23,7 @@ function ToolContainer({ children }) {
 			street: "",
 		}
 	);
+	const [mode] = useMode();
 
 	useEffect(() => {
 		if (systemStatus === UpdaterState.UPDATING) return;
@@ -29,7 +31,13 @@ function ToolContainer({ children }) {
 		const now = new Date();
 		const selfUpdate = TimeAdd(now, { hours: 6 });
 		if (lastUpdate < now || !isObjectSame(lastAddress, address)) {
-			updateRodizio(address);
+			if (mode === Modes.CEPNUM) {
+				const data = { ...address, ["street"]: "" };
+				updateRodizio(data);
+			} else {
+				const data = { ...address, ["cep"]: "", ["num"]: "" };
+				updateRodizio(data);
+			}
 			setLastUpdate(selfUpdate);
 			setLastAddress(address);
 		} else {

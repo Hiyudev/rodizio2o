@@ -37,3 +37,8 @@ export interface IAddress {
 	num: string;
 	street: string;
 }
+
+export enum Modes {
+	CEPNUM,
+	STREET
+}

@@ -1,7 +1,8 @@
 import { Dispatch, Fragment, SetStateAction, useEffect, useState } from "react";
-import { IAddress } from "../../shared";
+import { IAddress, Modes } from "../../shared";
 import useDebounce from "../../hooks/useDebounce";
 import useAddress from "../../hooks/useAddress";
+import useMode from "../../hooks/useMode";
 
 interface IToolAddressBar {
 	systemLoaded: boolean;
@@ -18,8 +19,18 @@ function ToolAddressBar({ systemLoaded, error, setError }: IToolAddressBar) {
 	const [address, setAddress] = useAddress();
 	const [loaded, setLoaded] = useState(false);
 
-	const [usingStreet, setUsingStreet] = useState(false);
-	const toggleStreet = () => setUsingStreet(!usingStreet);
+	const [mode, setMode] = useMode();
+
+	const [usingStreet, setUsingStreet] = useState(mode === Modes.STREET);
+	const toggleStreet = () => {
+		if (usingStreet) {
+			setMode(Modes.CEPNUM);
+			setUsingStreet(false);
+		} else {
+			setMode(Modes.STREET);
+			setUsingStreet(true);
+		}
+	};
 
 	const [inputValues, setInputValues] = useState<IAddress>(initialAddress);
 	const changeInputValue = (key, value) => {
