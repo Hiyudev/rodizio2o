@@ -4,11 +4,12 @@ import useDebounce from "../../hooks/useDebounce";
 import useAddress from "../../hooks/useAddress";
 
 interface IToolAddressBar {
+	systemLoaded: boolean;
 	error: string;
 	setError: Dispatch<SetStateAction<string>>;
 }
 
-function ToolAddressBar({ error, setError }: IToolAddressBar) {
+function ToolAddressBar({ systemLoaded, error, setError }: IToolAddressBar) {
 	const initialAddress: IAddress = {
 		cep: "",
 		num: "",
@@ -55,7 +56,7 @@ function ToolAddressBar({ error, setError }: IToolAddressBar) {
 					<div className="flex flex-grow flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 md:items-center">
 						<label htmlFor="street">Endereço de sua residência</label>
 						<input
-							disabled={!loaded}
+							disabled={!loaded || !systemLoaded}
 							className="bg-gray-700 p-2 px-5 rounded-full flex-grow"
 							name="street"
 							defaultValue={inputValues.street}
@@ -67,8 +68,8 @@ function ToolAddressBar({ error, setError }: IToolAddressBar) {
 						<div className="flex flex-grow flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 md:items-center">
 							<label htmlFor="cep">CEP</label>
 							<input
-								disabled={!loaded}
-								className="bg-gray-700 p-2 px-5 rounded-full flex-grow"
+								disabled={!loaded || !systemLoaded}
+								className="bg-gray-700 disabled:bg-gray-800 disabled:text-gray-400 transition-colors p-2 px-5 rounded-full flex-grow"
 								name="cep"
 								defaultValue={inputValues.cep}
 								onChange={(e) => changeInputValue("cep", e.target.value)}
@@ -77,8 +78,8 @@ function ToolAddressBar({ error, setError }: IToolAddressBar) {
 						<div className="flex flex-grow flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 md:items-center">
 							<label htmlFor="numero">Número de sua residência</label>
 							<input
-								disabled={!loaded}
-								className="bg-gray-700 p-2 px-5 rounded-full flex-grow"
+								disabled={!loaded || !systemLoaded}
+								className="bg-gray-700 disabled:bg-gray-800 disabled:text-gray-400 transition-colors p-2 px-5 rounded-full flex-grow"
 								name="numero"
 								defaultValue={inputValues.num}
 								onChange={(e) => changeInputValue("num", e.target.value)}

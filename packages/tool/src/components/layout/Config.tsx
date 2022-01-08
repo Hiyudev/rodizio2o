@@ -19,7 +19,11 @@ function ToolConfigPage() {
 
 	return (
 		<div className="space-y-8">
-			<ToolAddressBar error={configError} setError={handleConfigError} />
+			<ToolAddressBar
+				systemLoaded={loaded}
+				error={configError}
+				setError={handleConfigError}
+			/>
 
 			<div className="flex flex-row space-x-2">
 				{loaded ? (
