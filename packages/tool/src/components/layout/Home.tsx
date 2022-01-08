@@ -6,7 +6,7 @@ function ToolHomePage() {
 	const { nextEvent, futureEvents, loaded, rodizioStatus } = useRodizio();
 
 	return (
-		<div className="space-y-8">
+		<div className="space-y-4">
 			<ToolDisplay loaded={loaded} event={nextEvent} status={rodizioStatus} />
 
 			<ToolCycle loaded={loaded} list={futureEvents} />

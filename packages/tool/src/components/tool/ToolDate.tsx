@@ -47,12 +47,14 @@ const ToolDate: React.FC<IToolDateProps> = ({
 				active ? "bg-blue-400/50 dark:bg-blue-600/50" : ""
 			} ${disabled ? "text-gray-600" : ""}`}
 		>
-			<div className="flex flex-col flex-shrink-0 justify-center items-center border-gray-600 dark:border-gray-300 border-r-2 p-4 w-20 h-20">
-				<div className="font-medium text-3xl">{day}</div>
-				<div className="text-gray-600 dark:text-gray-400">{monthName}</div>
+			<div className="flex flex-col flex-shrink-0 justify-center items-center border-gray-600 dark:border-gray-300 border-r-2 px-4 py-2 w-16 h-16">
+				<div className="font-medium text-2xl">{day}</div>
+				<div className="text-gray-600 dark:text-gray-400 text-sm">
+					{monthName}
+				</div>
 			</div>
 
-			<div className="p-4 flex-shrink rounded-2xl w-full md:w-32">
+			<div className="px-4 py-2 flex-shrink rounded-2xl w-full md:w-32">
 				<span>{name}</span>
 				<br />
 				<span className="text-gray-600 dark:text-gray-400">{time}</span>
@@ -64,14 +66,14 @@ const ToolDate: React.FC<IToolDateProps> = ({
 export const ToolDateSkeleton = () => {
 	return (
 		<div className={"flex flex-row snap-start rounded-2xl w-full"}>
-			<div className="flex flex-col flex-shrink-0 justify-center items-center border-gray-600 dark:border-gray-300 border-r-2 p-4 w-20 h-20">
-				<div className="h-8 w-full bg-black dark:bg-white rounded-full animate-pulse"></div>
-				<div className="h-[1.875rem] w-full mt-3 bg-gray-600 dark:bg-gray-400 rounded-full animate-pulse"></div>
+			<div className="flex flex-col flex-shrink-0 justify-center items-center border-gray-600 dark:border-gray-300 border-r-2 px-4 py-2 w-16 h-16">
+				<div className="h-4 w-full bg-black dark:bg-white rounded-full animate-pulse"></div>
+				<div className="h-3 w-full mt-3 bg-gray-600 dark:bg-gray-400 rounded-full animate-pulse"></div>
 			</div>
 
-			<div className="p-4 flex-shrink rounded-2xl w-full md:w-32">
-				<div className="h-[1.188rem] w-15 bg-black dark:bg-white rounded-full animate-pulse"></div>
-				<div className="h-4 mt-3 w-1/2 bg-gray-600 dark:bg-gray-400 rounded-full animate-pulse"></div>
+			<div className="flex flex-col justify-center px-4 py-2 flex-shrink rounded-2xl w-full md:w-32">
+				<div className="h-4 w-16 bg-black dark:bg-white rounded-full animate-pulse"></div>
+				<div className="h-3 mt-3 w-12 bg-gray-600 dark:bg-gray-400 rounded-full animate-pulse"></div>
 			</div>
 		</div>
 	);

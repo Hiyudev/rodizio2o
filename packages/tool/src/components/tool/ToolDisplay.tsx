@@ -1,4 +1,8 @@
 import { useMemo } from "react";
+import DropletEmptyIcon from "../../icons/DropletEmpty";
+import DropletFillIcon from "../../icons/DropletFill";
+import DropletHalfIcon from "../../icons/DropletHalf";
+import DropletNotFoundIcon from "../../icons/DropletNotFound";
 import { Timeleft } from "../../lib/Time";
 import { IEvent, RodizioState } from "../../shared";
 
@@ -43,7 +47,23 @@ function ToolDisplay({ loaded, event, status }: IToolDisplay) {
 				return {
 					title: "",
 					desc: "",
+					icon: <DropletNotFoundIcon />,
 				};
+		}
+	}, [status]);
+
+	const Icon = useMemo(() => {
+		switch (status) {
+			case RodizioState.SUSPENDED:
+			case RodizioState.NOTFOUND:
+				return <DropletNotFoundIcon />;
+			case RodizioState.AVAILABLE:
+				return <DropletFillIcon />;
+			case RodizioState.SOON:
+			case RodizioState.RESUMING:
+				return <DropletHalfIcon />;
+			case RodizioState.NOT_AVAILABLE:
+				return <DropletEmptyIcon />;
 		}
 	}, [status]);
 
@@ -51,8 +71,9 @@ function ToolDisplay({ loaded, event, status }: IToolDisplay) {
 		<div>
 			{loaded ? (
 				<div className="text-center">
+					<div className="flex justify-center text-blue-400 mb-4">{Icon}</div>
 					<p>{message.title}</p>
-					<h1>{nextLeft}h</h1>
+					<h1 className="text-blue-400">{nextLeft}h</h1>
 					<small>
 						{message.desc} {nextDate.getDate()}/{nextDate.getMonth() + 1} -{" "}
 						{nextDate.getHours()}:
