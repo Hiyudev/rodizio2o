@@ -1,6 +1,4 @@
 import { Dispatch, SetStateAction } from "react";
-import useScreen from "../../hooks/useScreen";
-import useWindowSize from "../../hooks/useWindowSize";
 import HomeIcon from "../../icons/Home";
 import ListIcon from "../../icons/List";
 import SettingsIcon from "../../icons/Settings";
@@ -20,8 +18,6 @@ function Navbar({ currentPage, changePage }: INav) {
 		}
 	};
 
-	const { isTablet } = useScreen();
-
 	const activeClass = "dark:text-blue-400 text-blue-600";
 
 	return (
@@ -34,16 +30,16 @@ function Navbar({ currentPage, changePage }: INav) {
 			>
 				<HomeIcon />
 			</button>
-			{isTablet && (
-				<button
-					className={`flex justify-center hover:text-blue-500 items-center w-[2.5rem] h-[2.5rem] transition-colors ${
-						currentPage === RodizioPages.List ? activeClass : ""
-					}`}
-					onClick={() => switchPage(RodizioPages.List)}
-				>
-					<ListIcon />
-				</button>
-			)}
+
+			<button
+				className={`flex justify-center hover:text-blue-500 items-center w-[2.5rem] h-[2.5rem] transition-colors ${
+					currentPage === RodizioPages.List ? activeClass : ""
+				}`}
+				onClick={() => switchPage(RodizioPages.List)}
+			>
+				<ListIcon />
+			</button>
+
 			<button
 				className={`flex justify-center hover:text-blue-500 items-center w-[2.5rem] h-[2.5rem] transition-colors ${
 					currentPage === RodizioPages.Config ? activeClass : ""
