@@ -61,6 +61,13 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 		message: "",
 	});
 
+	const resetRodizioError = () => {
+		setRodizioError({
+			type: RodizioErrorTypes.None,
+			message: "",
+		});
+	};
+
 	const [systemStatus, setSystemStatus] = useState<UpdaterState>(
 		UpdaterState.INITIALIZING
 	);
@@ -73,6 +80,7 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 		if (systemStatus === UpdaterState.UPDATING) return;
 
 		setSystemStatus(UpdaterState.UPDATING);
+		resetRodizioError();
 
 		let url: string;
 		let error: RodizioErrorTypes;

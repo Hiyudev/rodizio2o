@@ -6,7 +6,7 @@ import MapPinIcon from "../../icons/MapIcon";
 import ToolAddressBar from "../tool/ToolAddressBar";
 
 function ToolConfigPage() {
-	const { rodizio, loaded, systemStatus } = useRodizio();
+	const { rodizio, loaded, systemStatus, rodizioError } = useRodizio();
 	const [configError, setConfigError] = useState("");
 
 	const handleConfigError = (message: string) => {
@@ -27,10 +27,10 @@ function ToolConfigPage() {
 
 			<div className="flex flex-row space-x-2">
 				{loaded ? (
-					configError.length > 0 ? (
+					configError.length > 0 || rodizioError.message.length > 0 ? (
 						<div className="flex flex-row space-x-4 w-full text-red-400 dark:text-red-600">
 							<ErrorIcon />
-							<span>{configError}</span>
+							<span>{rodizioError.message ?? configError}</span>
 						</div>
 					) : (
 						<div className="flex flex-row space-x-4 w-full">
