@@ -25,7 +25,7 @@ function ToolAddressBar({ systemLoaded, error, setError }: IToolAddressBar) {
 	const changeInputValue = (key, value) => {
 		setInputValues({ ...address, [key]: value });
 	};
-	const debounceInputValues = useDebounce(inputValues, 800);
+	const debounceInputValues = useDebounce(inputValues, 1500);
 
 	useEffect(() => {
 		setInputValues(address);

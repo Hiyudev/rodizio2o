@@ -1,6 +1,6 @@
 import { Fragment, useMemo, useReducer } from "react";
 import useKeyPress from "../../hooks/useKeyPress";
-import useScreenSize from "../../hooks/useMobile";
+import useScreen from "../../hooks/useScreen";
 import LeftArrowIcon from "../../icons/LeftArrow";
 import RightArrowIcon from "../../icons/RightArrow";
 import { constructGroups as formGroups } from "../../lib/Array";
@@ -12,7 +12,7 @@ interface IToolCycle {
 	list: IEvent[];
 }
 function ToolCycle({ loaded, list }: IToolCycle) {
-	const { isTablet } = useScreenSize();
+	const { isTablet } = useScreen();
 
 	const groups = useMemo(() => {
 		if (!list) return;

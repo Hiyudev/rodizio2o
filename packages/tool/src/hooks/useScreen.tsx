@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useWindowSize from "./useWindowSize";
 
-const useScreenSize = (): { isMobile: boolean; isTablet: boolean } => {
+const useScreen = (): { isMobile: boolean; isTablet: boolean } => {
 	const [isMobile, setMobile] = useState(false);
 	const [isTablet, setTablet] = useState(false);
 	const { width } = useWindowSize();
@@ -14,4 +14,4 @@ const useScreenSize = (): { isMobile: boolean; isTablet: boolean } => {
 	return { isMobile, isTablet };
 };
 
-export default useScreenSize;
+export default useScreen;
