@@ -30,7 +30,11 @@ function ToolConfigPage() {
 					configError.length > 0 || rodizioError.message.length > 0 ? (
 						<div className="flex flex-row space-x-4 w-full text-red-400 dark:text-red-600">
 							<ErrorIcon />
-							<span>{rodizioError.message ?? configError}</span>
+							<span>
+								{rodizioError.message.length > 0
+									? rodizioError.message
+									: configError}
+							</span>
 						</div>
 					) : (
 						<div className="flex flex-row space-x-4 w-full">

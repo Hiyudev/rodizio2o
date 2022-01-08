@@ -21,6 +21,7 @@ export interface IRodizioAPI {
 	next: IRodizio[];
 	location: string;
 	observation: null | string;
+	error?: string;
 }
 
 interface IUpdateRodizio {
@@ -73,7 +74,9 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 	);
 
 	const loaded = useMemo(() => {
-		return systemStatus === UpdaterState.DONE;
+		return (
+			systemStatus === UpdaterState.DONE || systemStatus === UpdaterState.ERROR
+		);
 	}, [systemStatus]);
 
 	const updateRodizio = ({ cep, num, street }: IUpdateRodizio) => {
@@ -94,19 +97,19 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 				error = RodizioErrorTypes.InvalidStreet;
 			}
 
-			fetch(url)
-				.then(async (res) => {
-					const data: IRodizioAPI = await res.json();
-					setRodizio(data);
-					setSystemStatus(UpdaterState.DONE);
-				})
-				.catch((rej) => {
+			fetch(url).then(async (res) => {
+				const data: IRodizioAPI = await res.json();
+				if (data.error) {
 					setRodizioError({
 						type: error,
-						message: rej.message,
+						message: data.error,
 					});
 					setSystemStatus(UpdaterState.ERROR);
-				});
+				} else {
+					setRodizio(data);
+					setSystemStatus(UpdaterState.DONE);
+				}
+			});
 		}
 	};
 
@@ -124,7 +127,7 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 				(d) => d[1] < new Date().getTime()
 			);
 
-		const closestNextArr = rodizio?.next[0].INICIO;
+		const closestNextArr = rodizio?.next?.[0].INICIO;
 
 		let date = closestCurrentArr?.[0]?.[1] ?? closestNextArr;
 		eventDate = new Date(date).getTime();
@@ -143,7 +146,7 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 		const { next } = rodizio;
 		let arr: IEvent[] = [];
 
-		next.map((v, i) => {
+		next?.map((v, i) => {
 			Object.entries(v).map((v, i) => {
 				arr.push({
 					name: v[0],
