@@ -71,9 +71,11 @@ function ToolDisplay({ loaded, event, status }: IToolDisplay) {
 		<div>
 			{loaded ? (
 				<div className="text-center">
-					<div className="flex justify-center text-blue-400 mb-4">{Icon}</div>
+					<div className="flex justify-center text-blue-600 mx-auto mb-4">
+						{Icon}
+					</div>
 					<p>{message.title}</p>
-					<h1 className="text-blue-400">{nextLeft}h</h1>
+					<h1 className="text-blue-600">{nextLeft}h</h1>
 					<small>
 						{message.desc} {nextDate.getDate()}/{nextDate.getMonth() + 1} -{" "}
 						{nextDate.getHours()}:

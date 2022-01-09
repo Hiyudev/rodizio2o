@@ -101,12 +101,12 @@ function ToolAddressBar({ systemLoaded, error, setError }: IToolAddressBar) {
 								value={inputValues.street}
 								ref={searchRef}
 								autoComplete="off"
-								className="bg-gray-300 dark:bg-gray-700 p-2 px-5 rounded-full w-full "
+								className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 hover:dark:bg-gray-600 transition-colors p-2 px-5 rounded-full w-full "
 								onChange={(e) => changeInputValue("street", e.target.value)}
 								onFocus={() => setShow(true)}
 							/>
 							{show && suggestions?.length > 0 && (
-								<ul className="absolute top-0 w-full rounded-3xl !mt-20 p-4 space-y-4 bg-gray-300 dark:bg-gray-700">
+								<ul className="absolute top-0 w-full rounded-3xl !mt-20 p-4 space-y-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 hover:dark:bg-gray-600 transition-colors">
 									{suggestions ? (
 										suggestions.map((v, i) => {
 											return (
@@ -139,7 +139,7 @@ function ToolAddressBar({ systemLoaded, error, setError }: IToolAddressBar) {
 							<label htmlFor="cep">CEP</label>
 							<input
 								disabled={!loaded || !systemLoaded}
-								className="bg-gray-700 disabled:bg-gray-800 disabled:text-gray-400 transition-colors p-2 px-5 rounded-full flex-grow"
+								className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 hover:dark:bg-gray-600 disabled:bg-gray-300 disabled:dark:bg-gray-800 disabled:text-gray-400 transition-colors p-2 px-5 rounded-full flex-grow"
 								name="cep"
 								value={inputValues.cep}
 								onChange={(e) => changeInputValue("cep", e.target.value)}
@@ -149,7 +149,7 @@ function ToolAddressBar({ systemLoaded, error, setError }: IToolAddressBar) {
 							<label htmlFor="numero">Número de sua residência</label>
 							<input
 								disabled={!loaded || !systemLoaded}
-								className="bg-gray-700 disabled:bg-gray-800 disabled:text-gray-400 transition-colors p-2 px-5 rounded-full flex-grow"
+								className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 hover:dark:bg-gray-600 disabled:bg-gray-300 disabled:dark:bg-gray-800 disabled:text-gray-400 transition-colors p-2 px-5 rounded-full flex-grow"
 								name="numero"
 								value={inputValues.num}
 								onChange={(e) => changeInputValue("num", e.target.value)}
@@ -159,7 +159,7 @@ function ToolAddressBar({ systemLoaded, error, setError }: IToolAddressBar) {
 				)}
 			</div>
 			<button
-				className="p-2 rounded-full text-white bg-blue-600 dark:bg-blue-400 hover:bg-blue-500 transition-colors"
+				className="p-2 rounded-full text-white bg-blue-600 hover:bg-blue-500 active:bg-blue-400 transition-colors"
 				onClick={toggleStreet}
 			>
 				Trocar

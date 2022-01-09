@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useAddress from "../../hooks/useAddress";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import useMode from "../../hooks/useMode";
@@ -47,7 +47,7 @@ function ToolContainer({ children }) {
 	}, [address]);
 
 	return (
-		<div className="w-full bg-gray-200 dark:bg-gray-800 min-h-[400px]">
+		<div className="flex flex-col w-full h-full min-h-screen bg-gray-100 dark:bg-gray-900 overflow-y-auto">
 			{children}
 		</div>
 	);
