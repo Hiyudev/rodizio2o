@@ -7,7 +7,12 @@ import { isObjectSame } from "../../lib/Object";
 import { TimeAdd } from "../../lib/Time";
 import { IAddress, Modes, UpdaterState } from "../../shared";
 
-function ToolContainer({ children }) {
+interface IToolContainer {
+	children: React.ReactNode;
+	className?: string;
+}
+
+function ToolContainer({ children, className }: IToolContainer) {
 	const { updateRodizio, renderRodizio, systemStatus } = useRodizio();
 	const [address] = useAddress();
 
@@ -29,7 +34,7 @@ function ToolContainer({ children }) {
 		if (systemStatus === UpdaterState.UPDATING) return;
 
 		const now = new Date();
-		const selfUpdate = TimeAdd(now, { hours: 6 });
+		const selfUpdate = TimeAdd(now, { hours: 3 });
 		if (lastUpdate < now || !isObjectSame(lastAddress, address)) {
 			if (mode === Modes.CEPNUM) {
 				const data = { ...address, ["street"]: "" };
@@ -47,7 +52,9 @@ function ToolContainer({ children }) {
 	}, [address]);
 
 	return (
-		<div className="flex flex-col w-full h-full min-h-screen bg-gray-100 dark:bg-gray-900 overflow-y-auto">
+		<div
+			className={`flex flex-col w-full h-full bg-gray-100 dark:bg-gray-900 overflow-y-auto ${className}`}
+		>
 			{children}
 		</div>
 	);
