@@ -7,7 +7,7 @@ import ToolHomePage from "./Home";
 import ToolListPage from "./List";
 import Navbar from "./Nav";
 
-export const App = () => {
+export const App = ({ hasThemeSwitcher, className }) => {
 	const [page, setPage] = useState(RodizioPages.Home);
 
 	const Container = () => {
@@ -23,8 +23,12 @@ export const App = () => {
 
 	return (
 		<RodizioWrapper>
-			<ToolContainer>
-				<Navbar currentPage={page} changePage={setPage} />
+			<ToolContainer className={className}>
+				<Navbar
+					hasThemeSwitcher={hasThemeSwitcher}
+					currentPage={page}
+					changePage={setPage}
+				/>
 				<main className="p-4">
 					<Container />
 				</main>

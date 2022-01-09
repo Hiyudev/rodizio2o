@@ -3,13 +3,15 @@ import HomeIcon from "../../icons/Home";
 import ListIcon from "../../icons/List";
 import SettingsIcon from "../../icons/Settings";
 import { RodizioPages } from "../../shared";
+import ThemeSwitcher from "../ui/ThemeSwitcher";
 
 interface INav {
+	hasThemeSwitcher: boolean;
 	currentPage: RodizioPages;
 	changePage: Dispatch<SetStateAction<RodizioPages>>;
 }
 
-function Navbar({ currentPage, changePage }: INav) {
+function Navbar({ hasThemeSwitcher, currentPage, changePage }: INav) {
 	const switchPage = (page: RodizioPages) => {
 		if (currentPage === page) {
 			changePage(RodizioPages.Home);
@@ -48,6 +50,8 @@ function Navbar({ currentPage, changePage }: INav) {
 			>
 				<SettingsIcon />
 			</button>
+
+			{hasThemeSwitcher && <ThemeSwitcher />}
 		</nav>
 	);
 }
