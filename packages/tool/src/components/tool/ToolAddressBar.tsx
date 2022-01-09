@@ -81,11 +81,12 @@ function ToolAddressBar({ systemLoaded, error, setError }: IToolAddressBar) {
 	useOnClickOutside(searchRef, desFocus);
 
 	useEffect(() => {
+		if (!show) return;
 		getSuggestions(debounceInputValues.street).then((res) => {
 			res = res.filter((v) => v !== debounceInputValues.street);
 			setSuggestions(res);
 		});
-	}, [debounceInputValues.street]);
+	}, [show, debounceInputValues.street]);
 
 	return (
 		<div className="flex flex-col space-y-4">
@@ -100,9 +101,9 @@ function ToolAddressBar({ systemLoaded, error, setError }: IToolAddressBar) {
 								value={inputValues.street}
 								ref={searchRef}
 								autoComplete="off"
-								className="bg-gray-700 p-2 px-5 rounded-full w-full"
+								className="bg-gray-300 dark:bg-gray-700 p-2 px-5 rounded-full w-full "
 								onChange={(e) => changeInputValue("street", e.target.value)}
-								onFocus={(e) => setShow(true)}
+								onFocus={() => setShow(true)}
 							/>
 							{show && suggestions?.length > 0 && (
 								<ul className="absolute top-0 w-full rounded-3xl !mt-20 p-4 space-y-4 bg-gray-300 dark:bg-gray-700">
@@ -158,7 +159,7 @@ function ToolAddressBar({ systemLoaded, error, setError }: IToolAddressBar) {
 				)}
 			</div>
 			<button
-				className="p-2 rounded-full bg-blue-600 dark:bg-blue-400 hover:bg-blue-500 transition-colors"
+				className="p-2 rounded-full text-white bg-blue-600 dark:bg-blue-400 hover:bg-blue-500 transition-colors"
 				onClick={toggleStreet}
 			>
 				Trocar
