@@ -1,10 +1,10 @@
+import { Fragment } from "react";
 import Section from "../components/layout/Section";
 import Feature from "../components/layout/Feature";
 import Footer from "../components/layout/Footer";
 import Hero from "../components/layout/Hero";
 import Navbar from "../components/layout/Navbar";
 import Tool from "../components/layout/Tool";
-import { Fragment } from "react";
 import ExtensionDemo from "../components/icons/ExtensionDemo";
 import Button from "../components/ui/Button";
 import { GradientText } from "../components/ui/Text";
@@ -15,7 +15,7 @@ const IndexPage = () => (
 
 		<Hero>
 			<h1 className="text-center">
-				veja se o <GradientText>rodízio</GradientText> de água com apenas um
+				veja o <GradientText>rodízio</GradientText> de água com apenas um
 				toque
 			</h1>
 		</Hero>
