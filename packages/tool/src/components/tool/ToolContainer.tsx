@@ -6,6 +6,7 @@ import { useRodizio } from "../../hooks/useRodizio";
 import { isObjectSame } from "../../lib/Object";
 import { TimeAdd } from "../../lib/Time";
 import { IAddress, Modes, UpdaterState } from "../../shared";
+import ToolAlert from "./ToolAlert";
 
 interface IToolContainer {
 	children: React.ReactNode;
@@ -13,7 +14,7 @@ interface IToolContainer {
 }
 
 function ToolContainer({ children, className }: IToolContainer) {
-	const { updateRodizio, renderRodizio, systemStatus } = useRodizio();
+	const { updateRodizio, renderRodizio, systemStatus, rodizio } = useRodizio();
 	const [address] = useAddress();
 
 	const [lastUpdate, setLastUpdate] = useLocalStorage<Date>(
@@ -56,6 +57,7 @@ function ToolContainer({ children, className }: IToolContainer) {
 			className={`flex flex-col w-full h-full bg-gray-100 dark:bg-gray-900 overflow-y-auto ${className}`}
 		>
 			{children}
+			{rodizio.observation && <ToolAlert message={rodizio.observation} />}
 		</div>
 	);
 }
