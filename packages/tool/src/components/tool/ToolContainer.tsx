@@ -1,19 +1,23 @@
-import { useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import useAddress from "../../hooks/useAddress";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import useMode from "../../hooks/useMode";
 import { useRodizio } from "../../hooks/useRodizio";
 import { isObjectSame } from "../../lib/Object";
 import { TimeAdd } from "../../lib/Time";
-import { IAddress, Modes, UpdaterState } from "../../shared";
+import { IAddress, Modes, RodizioPages, UpdaterState } from "../../shared";
+import ToolConfigPage from "../layout/Config";
+import ToolHomePage from "../layout/Home";
+import ToolListPage from "../layout/List";
+import Navbar from "../layout/Nav";
 import ToolAlert from "./ToolAlert";
 
 interface IToolContainer {
-	children: React.ReactNode;
 	className?: string;
+	hasThemeSwitcher?: boolean;
 }
 
-function ToolContainer({ children, className }: IToolContainer) {
+function ToolContainer({ className, hasThemeSwitcher }: IToolContainer) {
 	const { updateRodizio, renderRodizio, systemStatus, rodizio } = useRodizio();
 	const [address] = useAddress();
 
@@ -52,11 +56,31 @@ function ToolContainer({ children, className }: IToolContainer) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [address]);
 
+	const [page, setPage] = useState(RodizioPages.Home);
+
+	const Container = () => {
+		switch (page) {
+			case RodizioPages.Home:
+				return <ToolHomePage />;
+			case RodizioPages.Config:
+				return <ToolConfigPage />;
+			case RodizioPages.List:
+				return <ToolListPage />;
+		}
+	};
+
 	return (
 		<div
 			className={`flex flex-col w-full h-full bg-gray-100 dark:bg-gray-900 overflow-y-auto ${className}`}
 		>
-			{children}
+			<Navbar
+				hasThemeSwitcher={hasThemeSwitcher}
+				currentPage={page}
+				changePage={setPage}
+			/>
+			<main className="p-4">
+				<Container />
+			</main>
 			{rodizio.observation && <ToolAlert message={rodizio.observation} />}
 		</div>
 	);
