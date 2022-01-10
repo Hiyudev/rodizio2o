@@ -26,7 +26,9 @@ const Navbar = () => {
 			<li>
 				<Link href="/dev">Dev</Link>
 			</li>
-			<Button>Baixe a extensão</Button>
+			<Button>
+				<Link href="/download">Baixe o aplicativo</Link>
+			</Button>
 			<ThemeSwitcher />
 		</Fragment>
 	);

@@ -1,0 +1,28 @@
+.downloadsection {
+	@apply h-screen px-4 py-8 sm:px-8 md:px-12 lg:px-32 bg-gray-100;
+	@apply flex flex-col justify-center;
+}
+
+:global(.dark) .downloadsection {
+	@apply bg-gray-900;
+}
+
+.downloadlist {
+	@apply space-y-8;
+}
+
+.item {
+	@apply flex flex-row space-x-4;
+}
+
+.item_icon {
+	@apply flex items-center justify-center h-12 w-12 rounded-md bg-gradient-to-tl from-blue-500 via-indigo-600 to-violet-600 text-white;
+}
+
+.item_title {
+	@apply text-lg leading-6 font-medium text-gray-900 flex items-center;
+}
+
+:global(.dark) .item_title {
+	@apply text-gray-100;
+}
