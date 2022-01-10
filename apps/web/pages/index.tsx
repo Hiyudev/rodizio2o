@@ -8,36 +8,41 @@ import Tool from "../components/layout/Tool";
 import ExtensionDemo from "../components/icons/ExtensionDemo";
 import Button from "../components/ui/Button";
 import { GradientText } from "../components/ui/Text";
+import { usePWAInstall } from "react-use-pwa-install";
 
-const IndexPage = () => (
-	<Fragment>
-		<Navbar />
+const IndexPage = () => {
+	const install = usePWAInstall();
 
-		<Hero>
-			<h1 className="text-center">
-				veja o <GradientText>rodízio</GradientText> de água com apenas um
-				toque
-			</h1>
-		</Hero>
+	return (
+		<Fragment>
+			<Navbar />
 
-		<Tool />
+			<Hero>
+				<h1 className="text-center">
+					veja o <GradientText>rodízio</GradientText> de água com apenas um
+					toque
+				</h1>
+			</Hero>
 
-		<Feature />
+			<Tool />
 
-		<Section image={<ExtensionDemo />}>
-			<h2>
-				SAIBA SEMPRE QUANDO OCORRE AS PRÓXIMAS RESTRIÇÕES COM A{" "}
-				<GradientText>EXTENSÃO</GradientText>
-			</h2>
-			<p>
-				Basta colocar CEP e o número da residência e calcule para evitar
-				qualquer imprevisto
-			</p>
-			<Button>Baixe extensão</Button>
-		</Section>
+			<Feature />
 
-		<Footer />
-	</Fragment>
-);
+			<Section image={<ExtensionDemo />}>
+				<h2>
+					SAIBA SEMPRE QUANDO OCORRE AS PRÓXIMAS RESTRIÇÕES COM A{" "}
+					<GradientText>EXTENSÃO</GradientText>
+				</h2>
+				<p>
+					Basta colocar CEP e o número da residência e calcule para evitar
+					qualquer imprevisto
+				</p>
+				{install && <Button onClick={install}>Baixe o aplicativo</Button>}
+			</Section>
+
+			<Footer />
+		</Fragment>
+	);
+};
 
 export default IndexPage;

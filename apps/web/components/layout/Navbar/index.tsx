@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
-import { useTheme } from "next-themes";
 import useWindowSize from "../../../hooks/useWindowSize";
 import Close from "../../icons/Close";
 import Menu from "../../icons/Menu";
@@ -9,8 +8,10 @@ import Logo from "../../ui/Logo";
 import Layout from "../Layout";
 import s from "./navbar.module.css";
 import ThemeSwitcher from "../../ui/ThemeSwitcher";
+import { usePWAInstall } from "react-use-pwa-install";
 
 const Navbar = () => {
+	const install = usePWAInstall();
 	const { width } = useWindowSize();
 	const [isMobile, setMobile] = useState(false);
 
@@ -26,9 +27,7 @@ const Navbar = () => {
 			<li className={s.link}>
 				<Link href="/dev">Dev</Link>
 			</li>
-			<Link href="/download">
-				<a className={s.install}>Baixe o aplicativo</a>
-			</Link>
+			{install && <Button onClick={install}>Baixe o aplicativo</Button>}
 			<ThemeSwitcher />
 		</Fragment>
 	);
