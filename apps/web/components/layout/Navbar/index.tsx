@@ -23,12 +23,12 @@ const Navbar = () => {
 
 	const list = (
 		<Fragment>
-			<li>
+			<li className={s.link}>
 				<Link href="/dev">Dev</Link>
 			</li>
-			<Button>
-				<Link href="/download">Baixe o aplicativo</Link>
-			</Button>
+			<Link href="/download">
+				<a className={s.install}>Baixe o aplicativo</a>
+			</Link>
 			<ThemeSwitcher />
 		</Fragment>
 	);
