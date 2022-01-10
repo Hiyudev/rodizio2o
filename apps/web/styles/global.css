@@ -13,10 +13,6 @@
 		@apply font-black text-lg sm:text-xl md:text-2xl uppercase;
 	}
 
-	a {
-		@apply transition hover:text-violet-600;
-	}
-
 	body {
 		@apply transition-colors;
 	}

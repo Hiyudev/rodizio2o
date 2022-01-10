@@ -15,7 +15,7 @@ const Footer = () => {
 			</div>
 
 			<div>
-				<a href="https://github.com/KeysHD/rodizio2o">
+				<a className={s.link} href="https://github.com/KeysHD/rodizio2o">
 					<Github />
 				</a>
 			</div>
@@ -32,18 +32,18 @@ const Footer = () => {
 
 				<ul className={s.creatorlist}>
 					<li>
-						<a href="https://github.com/KeysHD">
+						<a className={s.link} href="https://github.com/KeysHD">
 							<Github />
 						</a>
 					</li>
 
 					<li>
-						<a href="https://twitter.com/Yuki2dev">
+						<a className={s.link} href="https://twitter.com/Yuki2dev">
 							<Twitter />
 						</a>
 					</li>
 					<li>
-						<a href="https://portfolio-yuki2dev.vercel.app/">
+						<a className={s.link} href="https://portfolio-yuki2dev.vercel.app/">
 							<KeysIcon />
 						</a>
 					</li>

@@ -20,9 +20,13 @@
 }
 
 .creatorlink {
-	@apply text-white;
+	@apply transition-colors text-white hover:text-violet-600;
 }
 
 .creatorlist {
 	@apply mt-2 flex flex-row space-x-2;
+}
+
+.link {
+	@apply transition-colors hover:text-violet-600;
 }
