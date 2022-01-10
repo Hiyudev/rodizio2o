@@ -7,7 +7,7 @@ interface ISection {
 const Section = ({ image, children }: ISection) => {
 	return (
 		<div className={s.page}>
-			<div className={s.image}>{image}</div>
+			<div>{image}</div>
 			<div className={s.content}>{children}</div>
 		</div>
 	);
