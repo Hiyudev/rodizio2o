@@ -86,7 +86,7 @@ function ToolAddressBar({ loaded }: IToolAddressBar) {
 												<button
 													key={i}
 													className={
-														"bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 hover:dark:bg-gray-600 p-4 transition-colors"
+														"w-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 hover:dark:bg-gray-600 p-4 transition-colors"
 													}
 													onClick={() => {
 														changeInputValue("street", v);
