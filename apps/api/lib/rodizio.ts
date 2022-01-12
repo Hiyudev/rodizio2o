@@ -99,24 +99,26 @@ export async function getRodizio(
 	});
 
 
-	const start = new Date(datas[0].INICIO);
-	const end = new Date(datas[0].NORMALIZACAO);
-	const isCurrent = TimeIn(start, end, now);
 
-	let currentRodizio = isCurrent ? datas[0] : null;
+	let hasCurrent = datas.filter(v => {
+		const start = new Date(v.INICIO);
+		const end = new Date(v.NORMALIZACAO);
+		return TimeIn(start, end, now);
+	})
+
+	let hasNext = datas.filter(v => {
+		return v.INICIO > new Date().getTime()
+	})
+
+	let currentRodizio = hasCurrent[0] ?? null;
 	let currentObservation = observations[0];
-	let nextRestrictions: IRodizio[] = [];
+	let nextRestrictions: IRodizio[] = [...hasNext];
 
 	let fullAddress: string = suggestions[0].text.split(',')[0];
 
-	const nextRodizio = !isCurrent ? datas.shift() : undefined;
-	if (nextRodizio) {
-		nextRestrictions.push(nextRodizio);
-	}
-
 	const lastRestrictions = datas.slice(1, 6);
 	const predictRestriction = analyseRodizio(lastRestrictions);
-	const ref = nextRestrictions[0] ?? datas[0]
+	const ref = nextRestrictions ?? hasCurrent
 	let nextRodizios: IRodizio[] = predictRodizio(ref, predictRestriction)
 
 	return {
@@ -150,14 +152,11 @@ function analyseRodizio(lastRodizio: IRodizio[]): number {
 	return Number(predictor);
 }
 
-function predictRodizio(ref: IRodizio, distance: number): IRodizio[] {
-	let nextRestrictions: IRodizio[] = [];
+function predictRodizio(list: IRodizio[], distance: number): IRodizio[] {
+	let nextRestrictions: IRodizio[] = [...list];
 
-	if (ref) {
-		nextRestrictions.push(ref);
-	}
-
-	for (let i = 1; nextRestrictions.length <= 3; i++) {
+	for (let i = 0; nextRestrictions.length <= 3; i++) {
+		const ref = nextRestrictions[i];
 		const { INICIO, RETOMADA, NORMALIZACAO } = ref;
 
 		const nextInicio = TimeAdd(new Date(INICIO), { days: distance * i }).getTime()
