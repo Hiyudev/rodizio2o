@@ -178,15 +178,14 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 
 	const nextEvent: IEvent | null = useMemo(() => {
 		if (isObjectEmpty(rodizio)) return null;
+		const now = new Date().getTime();
 
 		let eventName = "";
 		let eventDate: number;
 
 		const closestCurrentArr =
 			rodizio?.current &&
-			Object.entries(rodizio.current).filter(
-				(d) => d[1] < new Date().getTime()
-			);
+			Object.entries(rodizio.current).filter((d) => !(d[1] < now));
 
 		const closestNextArr = rodizio?.next?.[0].INICIO;
 
