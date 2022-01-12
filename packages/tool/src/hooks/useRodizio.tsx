@@ -1,13 +1,17 @@
 import { createContext, useContext, useMemo, useState } from "react";
-import { isObjectEmpty } from "../lib/Object";
-import { TimeIn, TimeSub } from "../lib/Time";
+import { isObjectEmpty, isObjectSame } from "../lib/Object";
+import { TimeAdd, TimeIn, TimeSub } from "../lib/Time";
 import {
+	IAddress,
 	IEvent,
+	Modes,
 	RodizioErrorTypes,
 	RodizioState,
 	UpdaterState,
 } from "../shared";
+import useAddress from "./useAddress";
 import useLocalStorage from "./useLocalStorage";
+import useMode from "./useMode";
 
 export interface IRodizio {
 	[key: string]: number;
@@ -30,17 +34,13 @@ interface IUpdateRodizio {
 	street?: string;
 }
 
-interface IRodizioError {
-	type: RodizioErrorTypes;
-	message: string;
-}
-
 interface IRodizioContext {
 	rodizio: IRodizioAPI;
 	rodizioStatus: RodizioState;
-	rodizioError: IRodizioError;
+	rodizioError: null | string;
 	updateRodizio: ({ cep, num, street }: IUpdateRodizio) => void;
 	renderRodizio: () => void;
+	syncRodizio: () => void;
 	systemStatus: UpdaterState;
 	nextEvent: IEvent;
 	futureEvents: IEvent[];
@@ -50,6 +50,22 @@ interface IRodizioContext {
 const RodizioContext = createContext({} as IRodizioContext);
 
 export const RodizioWrapper: React.FC = ({ children }) => {
+	const [address] = useAddress();
+
+	const [lastUpdate, setLastUpdate] = useLocalStorage<Date>(
+		"@lastupdate",
+		new Date()
+	);
+	const [lastAddress, setLastAddress] = useLocalStorage<IAddress>(
+		"@lastaddress",
+		{
+			cep: "",
+			num: "",
+			street: "",
+		}
+	);
+	const [mode] = useMode();
+	// Rodizio
 	const initialValue = {} as IRodizioAPI;
 
 	const [rodizio, setRodizio] = useLocalStorage<IRodizioAPI>(
@@ -57,59 +73,105 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 		initialValue
 	);
 
-	const [rodizioError, setRodizioError] = useState<IRodizioError>({
-		type: RodizioErrorTypes.None,
-		message: "",
-	});
+	const [rodizioError, setRodizioError] = useState<string>(null);
 
 	const resetRodizioError = () => {
-		setRodizioError({
-			type: RodizioErrorTypes.None,
-			message: "",
-		});
+		setRodizioError(null);
 	};
 
 	const [systemStatus, setSystemStatus] = useState<UpdaterState>(
 		UpdaterState.INITIALIZING
 	);
 
-	const loaded = useMemo(() => {
-		return (
-			systemStatus === UpdaterState.DONE || systemStatus === UpdaterState.ERROR
-		);
-	}, [systemStatus]);
+	const loaded = useMemo(
+		() =>
+			systemStatus === UpdaterState.DONE || systemStatus === UpdaterState.ERROR,
+		[systemStatus]
+	);
 
-	const updateRodizio = ({ cep, num, street }: IUpdateRodizio) => {
+	const syncRodizio = () => {
 		if (systemStatus === UpdaterState.UPDATING) return;
 
+		const now = new Date();
+		const selfUpdate = TimeAdd(now, { hours: 3 });
+
+		let { cep, num, street } = address;
+		if (
+			mode === Modes.CEPNUM &&
+			(!cep || cep?.length == 0 || !num || num?.length == 0)
+		) {
+			setSystemStatus(UpdaterState.ERROR);
+			console.log("CEP");
+			return setRodizioError("Nenhum endereço foi encontrado");
+		} else if (mode === Modes.STREET && (!street || street?.length == 0)) {
+			console.log("STREET");
+			setSystemStatus(UpdaterState.ERROR);
+			return setRodizioError("Nenhum endereço foi encontrado");
+		}
+
+		cep = cep.trim().replaceAll("-", "");
+		num = num.trim();
+
+		if (mode === Modes.CEPNUM && cep.length !== 8) {
+			setSystemStatus(UpdaterState.ERROR);
+			return setRodizioError("CEP inserido não possui 8 digitos");
+		} else if (mode === Modes.CEPNUM && num.length == 0) {
+			setSystemStatus(UpdaterState.ERROR);
+			return setRodizioError(
+				"Número da residência inserido deve pelo menos possuir 1 digito"
+			);
+		} else if (mode === Modes.STREET && street.length <= 5) {
+			setSystemStatus(UpdaterState.ERROR);
+			return setRodizioError(
+				"Endereço da residência inserida deve haver no mínimo 5 caracteres"
+			);
+		}
+
+		if (lastUpdate < now || !isObjectSame(lastAddress, address)) {
+			if (mode === Modes.CEPNUM) {
+				const data = { ...address, ["street"]: "" };
+				updateRodizio(data);
+			} else {
+				const data = { ...address, ["cep"]: "", ["num"]: "" };
+				updateRodizio(data);
+			}
+			setLastUpdate(selfUpdate);
+			setLastAddress(address);
+		} else {
+			renderRodizio();
+		}
+	};
+
+	const updateRodizio = ({ cep, num, street }: IUpdateRodizio) => {
 		setSystemStatus(UpdaterState.UPDATING);
 		resetRodizioError();
 
 		let url: string;
-		let error: RodizioErrorTypes;
 
 		if (cep || street) {
 			if (cep) {
+				cep = cep.trim().replaceAll("-", "");
+				num = num.trim();
+
 				url = `http://localhost:3001/api/rodizio/${cep}/${num}`;
-				error = RodizioErrorTypes.InvalidCepNum;
 			} else {
 				url = `http://localhost:3001/api/rodizio?address=${street}`;
-				error = RodizioErrorTypes.InvalidStreet;
 			}
 
-			fetch(url).then(async (res) => {
-				const data: IRodizioAPI = await res.json();
-				if (data.error) {
-					setRodizioError({
-						type: error,
-						message: data.error,
-					});
-					setSystemStatus(UpdaterState.ERROR);
-				} else {
-					setRodizio(data);
-					setSystemStatus(UpdaterState.DONE);
-				}
-			});
+			try {
+				fetch(url).then(async (res) => {
+					const data: IRodizioAPI = await res.json();
+					if (data.error) {
+						setRodizioError(data.error);
+						setSystemStatus(UpdaterState.ERROR);
+					} else {
+						setRodizio(data);
+						setSystemStatus(UpdaterState.DONE);
+					}
+				});
+			} catch (err) {
+				setRodizioError(err.message);
+			}
 		}
 	};
 
@@ -172,7 +234,7 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 	}, [rodizio.observation]);
 
 	const rodizioStatus = useMemo(() => {
-		if (isObjectEmpty(rodizio) && !nextEvent) return RodizioState.NOTFOUND;
+		if (isObjectEmpty(rodizio)) return RodizioState.NOTFOUND;
 		if (isSuspended) return RodizioState.SUSPENDED;
 
 		const now = new Date();
@@ -196,6 +258,7 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 		rodizioStatus,
 		rodizioError,
 		updateRodizio,
+		syncRodizio,
 		renderRodizio,
 		systemStatus,
 		nextEvent,

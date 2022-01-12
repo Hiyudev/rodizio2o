@@ -66,7 +66,7 @@ function ToolCycle({ loaded, list }: IToolCycle) {
 				);
 			}
 		} else {
-			if (loaded) {
+			if (loaded && renderList) {
 				return (
 					<Fragment>
 						{renderList.map((v, i) => {

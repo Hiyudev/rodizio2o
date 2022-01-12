@@ -16,7 +16,9 @@ function ToolDisplay({ loaded, event, status }: IToolDisplay) {
 	const now = new Date();
 	const nextDate = loaded && new Date(event?.data);
 	const nextLeftObj = loaded && Timeleft(now, nextDate);
-	const nextLeft = nextLeftObj.days * 24 + nextLeftObj.hours;
+
+	const leftDays = nextLeftObj.days ? nextLeftObj.days + "d" : "";
+	const nextLeft = leftDays + `${nextLeftObj.hours}h`;
 
 	const message = useMemo(() => {
 		switch (status) {
@@ -43,16 +45,15 @@ function ToolDisplay({ loaded, event, status }: IToolDisplay) {
 					desc: "Volta às",
 				};
 			case RodizioState.NOTFOUND:
-			default:
 				return {
-					title: "",
-					desc: "",
+					title: "Não foi encontrado nenhum dado",
+					desc: "Confira seus dados inseridos se não há nenhum erro",
 					icon: <DropletNotFoundIcon />,
 				};
 		}
 	}, [status]);
 
-	const Icon = useMemo(() => {
+	const Icon = () => {
 		switch (status) {
 			case RodizioState.SUSPENDED:
 			case RodizioState.NOTFOUND:
@@ -65,22 +66,34 @@ function ToolDisplay({ loaded, event, status }: IToolDisplay) {
 			case RodizioState.NOT_AVAILABLE:
 				return <DropletEmptyIcon />;
 		}
-	}, [status]);
+	};
+
+	const Detail = () => {
+		if (status === RodizioState.NOTFOUND) {
+			return <small>{message.desc}</small>;
+		} else {
+			return (
+				<small>
+					{message.desc} {nextDate.getDate()}/{nextDate.getMonth() + 1} -{" "}
+					{nextDate.getHours()}:
+					{(nextDate.getMinutes() < 10 ? "0" : "") + nextDate.getMinutes()}
+				</small>
+			);
+		}
+	};
 
 	return (
 		<div>
 			{loaded ? (
 				<div className="text-center">
 					<div className="flex justify-center text-blue-600 mx-auto mb-4">
-						{Icon}
+						<Icon />
 					</div>
 					<p>{message.title}</p>
-					<h1 className="text-blue-600">{nextLeft}h</h1>
-					<small>
-						{message.desc} {nextDate.getDate()}/{nextDate.getMonth() + 1} -{" "}
-						{nextDate.getHours()}:
-						{(nextDate.getMinutes() < 10 ? "0" : "") + nextDate.getMinutes()}
-					</small>
+					{status !== RodizioState.NOTFOUND && (
+						<h1 className="text-blue-600">{nextLeft}</h1>
+					)}
+					<Detail />
 				</div>
 			) : (
 				<div>

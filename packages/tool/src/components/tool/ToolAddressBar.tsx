@@ -1,36 +1,20 @@
-import {
-	Dispatch,
-	Fragment,
-	SetStateAction,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { IAddress, Modes } from "../../shared";
 import useDebounce from "../../hooks/useDebounce";
 import useAddress from "../../hooks/useAddress";
 import useMode from "../../hooks/useMode";
 import useOnClickOutside from "../../hooks/useClickOutside";
 import { getSuggestions } from "../../lib/Suggestion";
+import { useRodizio } from "../../hooks/useRodizio";
 
 interface IToolAddressBar {
-	systemLoaded: boolean;
-	error: string;
-	setError: Dispatch<SetStateAction<string>>;
+	loaded: boolean;
 }
 
-function ToolAddressBar({ systemLoaded, error, setError }: IToolAddressBar) {
-	// Address section
-	const initialAddress: IAddress = {
-		cep: "",
-		num: "",
-		street: "",
-	};
+function ToolAddressBar({ loaded }: IToolAddressBar) {
 	const [address, setAddress] = useAddress();
-	const [loaded, setLoaded] = useState(false);
-
 	const [mode, setMode] = useMode();
+	const { syncRodizio } = useRodizio();
 
 	const [usingStreet, setUsingStreet] = useState(mode === Modes.STREET);
 	const toggleStreet = () => {
@@ -43,33 +27,22 @@ function ToolAddressBar({ systemLoaded, error, setError }: IToolAddressBar) {
 		}
 	};
 
-	const [inputValues, setInputValues] = useState<IAddress>(initialAddress);
+	const [inputValues, setInputValues] = useState<IAddress>(address);
 	const changeInputValue = (key, value) => {
-		setInputValues({ ...address, [key]: value });
+		setInputValues({ ...inputValues, [key]: value });
 	};
+
 	const debounceInputValues = useDebounce(inputValues, 1500);
 
 	useEffect(() => {
-		setInputValues(address);
-		setLoaded(true);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	useEffect(() => {
-		const invalidCep = debounceInputValues?.cep?.length !== 8;
-		const invalidStreet = debounceInputValues?.street?.length <= 5;
-		if (invalidCep || invalidStreet) {
-			let message = invalidCep
-				? "CEP colocado é inválido"
-				: "Rua colocada é inválido";
-
-			setError(error.length > 0 ? error : message);
-		} else {
-			setError("");
-			setAddress(debounceInputValues);
-		}
+		setAddress(debounceInputValues);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debounceInputValues]);
+
+	useEffect(() => {
+		syncRodizio();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [address]);
 
 	// Suggestions
 	const [show, setShow] = useState(false);
@@ -82,11 +55,11 @@ function ToolAddressBar({ systemLoaded, error, setError }: IToolAddressBar) {
 
 	useEffect(() => {
 		if (!show) return;
-		getSuggestions(debounceInputValues.street).then((res) => {
-			res = res.filter((v) => v !== debounceInputValues.street);
+		getSuggestions(address.street).then((res) => {
+			res = res.filter((v) => v !== address.street);
 			setSuggestions(res);
 		});
-	}, [show, debounceInputValues.street]);
+	}, [show, address.street]);
 
 	return (
 		<div className="flex flex-col space-y-4">
@@ -96,7 +69,7 @@ function ToolAddressBar({ systemLoaded, error, setError }: IToolAddressBar) {
 						<label htmlFor="street">Endereço de sua residência</label>
 						<div className="w-full" ref={searchRef}>
 							<input
-								disabled={!loaded || !systemLoaded}
+								disabled={!loaded}
 								name="street"
 								value={inputValues.street}
 								ref={searchRef}
@@ -106,20 +79,22 @@ function ToolAddressBar({ systemLoaded, error, setError }: IToolAddressBar) {
 								onFocus={() => setShow(true)}
 							/>
 							{show && suggestions?.length > 0 && (
-								<ul className="absolute top-0 w-full rounded-3xl !mt-20 p-4 space-y-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 hover:dark:bg-gray-600 transition-colors">
+								<ul className="absolute top-0 w-full rounded-3xl !mt-20">
 									{suggestions ? (
 										suggestions.map((v, i) => {
 											return (
-												<li key={i}>
-													<button
-														onClick={() => {
-															changeInputValue("street", v);
-															setShow(false);
-														}}
-													>
-														{v}
-													</button>
-												</li>
+												<button
+													key={i}
+													className={
+														"bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 hover:dark:bg-gray-600 p-4 transition-colors"
+													}
+													onClick={() => {
+														changeInputValue("street", v);
+														setShow(false);
+													}}
+												>
+													{v}
+												</button>
 											);
 										})
 									) : (
@@ -138,7 +113,7 @@ function ToolAddressBar({ systemLoaded, error, setError }: IToolAddressBar) {
 						<div className="flex flex-grow flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 md:items-center">
 							<label htmlFor="cep">CEP</label>
 							<input
-								disabled={!loaded || !systemLoaded}
+								disabled={!loaded}
 								className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 hover:dark:bg-gray-600 disabled:bg-gray-300 disabled:dark:bg-gray-800 disabled:text-gray-400 transition-colors p-2 px-5 rounded-full flex-grow"
 								name="cep"
 								value={inputValues.cep}
@@ -148,7 +123,7 @@ function ToolAddressBar({ systemLoaded, error, setError }: IToolAddressBar) {
 						<div className="flex flex-grow flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 md:items-center">
 							<label htmlFor="numero">Número de sua residência</label>
 							<input
-								disabled={!loaded || !systemLoaded}
+								disabled={!loaded}
 								className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 hover:dark:bg-gray-600 disabled:bg-gray-300 disabled:dark:bg-gray-800 disabled:text-gray-400 transition-colors p-2 px-5 rounded-full flex-grow"
 								name="numero"
 								value={inputValues.num}

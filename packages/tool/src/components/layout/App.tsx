@@ -1,4 +1,3 @@
-import { RodizioWrapper } from "../../hooks/useRodizio";
 import ToolContainer from "../tool/ToolContainer";
 
 interface IApp {
@@ -8,11 +7,6 @@ interface IApp {
 
 export const App = ({ hasThemeSwitcher, className }: IApp) => {
 	return (
-		<RodizioWrapper>
-			<ToolContainer
-				hasThemeSwitcher={hasThemeSwitcher}
-				className={className}
-			/>
-		</RodizioWrapper>
+		<ToolContainer hasThemeSwitcher={hasThemeSwitcher} className={className} />
 	);
 };
