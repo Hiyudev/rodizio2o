@@ -98,13 +98,12 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 		let { cep, num, street } = address;
 		if (
 			mode === Modes.CEPNUM &&
-			(!cep || cep?.length == 0 || !num || num?.length == 0)
+			(!cep || cep?.length == 0) &&
+			(!num || num?.length == 0)
 		) {
 			setSystemStatus(UpdaterState.ERROR);
-			console.log("CEP");
 			return setRodizioError("Nenhum endereço foi encontrado");
 		} else if (mode === Modes.STREET && (!street || street?.length == 0)) {
-			console.log("STREET");
 			setSystemStatus(UpdaterState.ERROR);
 			return setRodizioError("Nenhum endereço foi encontrado");
 		}
