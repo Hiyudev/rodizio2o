@@ -42,7 +42,7 @@ function ToolAddressBar({ loaded }: IToolAddressBar) {
 	useEffect(() => {
 		syncRodizio();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [address]);
+	}, [address, mode]);
 
 	// Suggestions
 	const [show, setShow] = useState(false);
@@ -74,7 +74,7 @@ function ToolAddressBar({ loaded }: IToolAddressBar) {
 								value={inputValues.street}
 								ref={searchRef}
 								autoComplete="off"
-								className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 hover:dark:bg-gray-600 transition-colors p-2 px-5 rounded-full w-full "
+								className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 hover:dark:bg-gray-600 disabled:bg-gray-300 disabled:dark:bg-gray-800 disabled:text-gray-400 transition-colors p-2 px-5 rounded-full w-full "
 								onChange={(e) => changeInputValue("street", e.target.value)}
 								onFocus={() => setShow(true)}
 							/>

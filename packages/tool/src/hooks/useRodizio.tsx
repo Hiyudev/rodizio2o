@@ -126,20 +126,21 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 			);
 		}
 
+		let data: IAddress;
+		if (mode === Modes.CEPNUM) {
+			data = { ...address, ["street"]: "" };
+		} else {
+			data = { ...address, ["cep"]: "", ["num"]: "" };
+		}
+
 		if (
 			lastUpdate < now ||
-			!isObjectSame(lastAddress, address) ||
+			!isObjectSame(lastAddress, data) ||
 			isObjectEmpty(rodizio)
 		) {
-			if (mode === Modes.CEPNUM) {
-				const data = { ...address, ["street"]: "" };
-				updateRodizio(data);
-			} else {
-				const data = { ...address, ["cep"]: "", ["num"]: "" };
-				updateRodizio(data);
-			}
+			updateRodizio(data);
+			setLastAddress(data);
 			setLastUpdate(selfUpdate);
-			setLastAddress(address);
 		} else {
 			renderRodizio();
 		}
