@@ -1,7 +1,10 @@
 .page {
-	@apply flex flex-col sm:flex-row space-x-0 sm:space-x-8 min-h-screen h-full px-4 py-8 sm:px-8 md:px-12 lg:px-32;
+	@apply flex flex-col sm:flex-row space-x-0 space-y-8 sm:space-y-0 sm:space-x-8 min-h-screen h-full px-4 py-8 sm:px-8 md:px-12 lg:px-32;
 }
 
+.image {
+	@apply flex flex-col items-center justify-center w-full;
+}
 
 .content {
 	@apply flex flex-col space-y-8 justify-center;

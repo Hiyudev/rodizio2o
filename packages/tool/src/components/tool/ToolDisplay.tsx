@@ -86,7 +86,7 @@ function ToolDisplay({ loaded, event, status }: IToolDisplay) {
 		<div>
 			{loaded ? (
 				<div className="text-center">
-					<div className="flex justify-center text-blue-600 mx-auto mb-4">
+					<div className="flex justify-center text-blue-600 mx-auto mb-2">
 						<Icon />
 					</div>
 					<p>{message.title}</p>

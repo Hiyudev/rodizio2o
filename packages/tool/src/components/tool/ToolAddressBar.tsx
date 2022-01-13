@@ -67,7 +67,7 @@ function ToolAddressBar({ loaded }: IToolAddressBar) {
 				{usingStreet ? (
 					<div className="flex flex-grow flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 md:items-center relative">
 						<label htmlFor="street">Endereço de sua residência</label>
-						<div className="w-full" ref={searchRef}>
+						<div className="w-full relative" ref={searchRef}>
 							<input
 								disabled={!loaded}
 								name="street"
@@ -79,14 +79,18 @@ function ToolAddressBar({ loaded }: IToolAddressBar) {
 								onFocus={() => setShow(true)}
 							/>
 							{show && suggestions?.length > 0 && (
-								<ul className="absolute top-0 w-full rounded-3xl !mt-20">
+								<ul className="absolute w-full top-0 rounded-3xl border-2 border-gray-900 dark:border-gray-100 !mt-12">
 									{suggestions ? (
 										suggestions.map((v, i) => {
 											return (
 												<button
 													key={i}
 													className={
-														"w-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 hover:dark:bg-gray-600 p-4 transition-colors"
+														(i == 0 ? "rounded-t-3xl " : "") +
+														(i == suggestions.length - 1
+															? "rounded-b-3xl "
+															: "") +
+														"w-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 hover:dark:bg-gray-600 p-2 px-5 transition-colors"
 													}
 													onClick={() => {
 														changeInputValue("street", v);

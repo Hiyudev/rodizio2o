@@ -1,8 +1,6 @@
 const ExtensionDemo = () => {
 	return (
 		<svg
-			width="350"
-			height="100%"
 			viewBox="0 0 534 601"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"

@@ -1,9 +1,8 @@
-import dynamic from "next/dynamic";
 import { Fragment, useEffect } from "react";
 import { useRodizio } from "../../hooks/useRodizio";
 import MapPinIcon from "../../icons/MapIcon";
 import { RodizioState } from "../../shared";
-const ToolCycle = dynamic(() => import("../tool/ToolCycle"));
+import ToolCycle from "../tool/ToolCycle";
 import ToolDisplay from "../tool/ToolDisplay";
 
 function ToolHomePage() {

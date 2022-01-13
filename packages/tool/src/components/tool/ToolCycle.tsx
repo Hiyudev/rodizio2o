@@ -103,7 +103,7 @@ function ToolCycle({ loaded, list }: IToolCycle) {
 	});
 
 	return (
-		<ul className="flex flex-col items-start sm:items-center sm:flex-row">
+		<ul className="flex flex-col items-start space-y-4 sm:space-y-0 sm:space-x-4 sm:items-center sm:flex-row">
 			{!isTablet && (
 				<button
 					disabled={page === 0 || !loaded}

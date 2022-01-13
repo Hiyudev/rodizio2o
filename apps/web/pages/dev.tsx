@@ -19,7 +19,7 @@ const DevPage = () => {
 				</h1>
 			</Hero>
 
-			<ApiSection />
+			<ApiSection url={process.env.NEXT_PUBLIC_API_URL} />
 
 			<Section image={<Developer />}>
 				<h2>

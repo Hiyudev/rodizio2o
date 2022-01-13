@@ -30,8 +30,8 @@ const IndexPage = () => {
 
 			<Section image={<ExtensionDemo />}>
 				<h2>
-					SAIBA SEMPRE QUANDO OCORRE AS PRÓXIMAS RESTRIÇÕES COM A{" "}
-					<GradientText>EXTENSÃO</GradientText>
+					SAIBA SEMPRE QUANDO OCORRE AS PRÓXIMAS RESTRIÇÕES COM O{" "}
+					<GradientText>APLICATIVO</GradientText>
 				</h2>
 				<p>
 					Basta colocar CEP e o número da residência e calcule para evitar
