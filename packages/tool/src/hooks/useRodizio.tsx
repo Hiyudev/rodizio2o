@@ -126,7 +126,11 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 			);
 		}
 
-		if (lastUpdate < now || !isObjectSame(lastAddress, address)) {
+		if (
+			lastUpdate < now ||
+			!isObjectSame(lastAddress, address) ||
+			isObjectEmpty(rodizio)
+		) {
 			if (mode === Modes.CEPNUM) {
 				const data = { ...address, ["street"]: "" };
 				updateRodizio(data);
