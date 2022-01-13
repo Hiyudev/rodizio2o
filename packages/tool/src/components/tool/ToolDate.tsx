@@ -45,7 +45,7 @@ const ToolDate: React.FC<IToolDateProps> = ({
 		<li
 			className={`flex flex-row snap-start rounded-2xl w-full ${
 				active ? "bg-blue-400/50 dark:bg-blue-600/50" : ""
-			} ${disabled ? "text-gray-600" : ""}`}
+			} ${disabled ? "opacity-25" : ""}`}
 		>
 			<div className="flex flex-col flex-shrink-0 justify-center items-center border-gray-600 dark:border-gray-300 border-r-2 px-4 py-2 w-16 h-16">
 				<div className="font-medium text-2xl">{day}</div>

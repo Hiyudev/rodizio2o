@@ -203,19 +203,32 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 	const futureEvents: IEvent[] | null = useMemo(() => {
 		if (isObjectEmpty(rodizio)) return null;
 
-		const { next } = rodizio;
-		let arr: IEvent[] = [];
+		const { current, next } = rodizio;
+		const curr = [current];
+		const arr = [...curr, ...next];
 
-		next?.map((v, i) => {
+		let result: IEvent[] = [];
+		let hasActivated = false;
+
+		arr.map((v, i) => {
 			Object.entries(v).map((v, i) => {
-				arr.push({
+				let perm = new Date(v[1]) > new Date();
+				let active = false;
+				if (perm && !hasActivated) {
+					hasActivated = true;
+					active = true;
+				}
+
+				result.push({
 					name: v[0],
 					data: v[1],
+					disabled: new Date(v[1]) < new Date(),
+					active: active,
 				});
 			});
 		});
 
-		return arr;
+		return result;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [rodizio]);
 

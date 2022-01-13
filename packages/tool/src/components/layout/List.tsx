@@ -6,11 +6,18 @@ function ToolListPage() {
 
 	return (
 		<ul className="flex flex-col">
-			{futureEvents.map((v, i) => {
-				return (
-					<ToolDate key={i} eventDate={new Date(v.data)} eventName={v.name} />
-				);
-			})}
+			{futureEvents
+				.filter((v) => !v.disabled)
+				.map((v, i) => {
+					return (
+						<ToolDate
+							key={i}
+							active={v.active}
+							eventDate={new Date(v.data)}
+							eventName={v.name}
+						/>
+					);
+				})}
 		</ul>
 	);
 }

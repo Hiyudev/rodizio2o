@@ -30,6 +30,8 @@ export enum UpdaterState {
 export interface IEvent {
 	data: number;
 	name: string;
+	active?: boolean;
+	disabled?: boolean;
 }
 
 export interface IAddress {

@@ -39,7 +39,7 @@ function ToolCycle({ loaded, list }: IToolCycle) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [page]);
 
-	const mobileList = list && list.slice(0, 2);
+	const mobileList = list && list.filter((v) => !v.disabled).slice(0, 2);
 
 	const Cycle = () => {
 		if (isTablet) {
@@ -52,6 +52,7 @@ function ToolCycle({ loaded, list }: IToolCycle) {
 									key={i}
 									eventName={v.name}
 									eventDate={new Date(v.data)}
+									active={v.active}
 								/>
 							);
 						})}
@@ -75,6 +76,8 @@ function ToolCycle({ loaded, list }: IToolCycle) {
 									key={i}
 									eventName={v.name}
 									eventDate={new Date(v.data)}
+									disabled={v.disabled}
+									active={v.active}
 								/>
 							);
 						})}
