@@ -12,7 +12,7 @@ const ApiSection = ({ url }) => {
 
 						<pre>
 							<code>
-								{url}/api/rodizio?cep=<b>[cep]</b>&numero=<b>[numero]</b>
+								{url}/api/rodizio?cep=<b>[cep]</b>&num=<b>[numero]</b>
 							</code>
 						</pre>
 						<pre>
