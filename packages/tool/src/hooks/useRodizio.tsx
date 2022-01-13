@@ -204,9 +204,8 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 		if (isObjectEmpty(rodizio)) return null;
 
 		const { current, next } = rodizio;
-		const curr = [current];
-		const arr = [...curr, ...next];
-
+		const curr = current ? [current] : [];
+		let arr: IRodizio[] = [...curr, ...next];
 		let result: IEvent[] = [];
 		let hasActivated = false;
 
