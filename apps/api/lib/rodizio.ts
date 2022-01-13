@@ -155,8 +155,8 @@ function analyseRodizio(lastRodizio: IRodizio[]): number {
 function predictRodizio(list: IRodizio[], distance: number): IRodizio[] {
 	let nextRestrictions: IRodizio[] = [...list];
 
-	for (let i = 0; nextRestrictions.length <= 3; i++) {
-		const ref = nextRestrictions[i];
+	for (let i = 1; nextRestrictions.length <= 3; i++) {
+		const ref = nextRestrictions[i - 1];
 		const { INICIO, RETOMADA, NORMALIZACAO } = ref;
 
 		const nextInicio = TimeAdd(new Date(INICIO), { days: distance * i }).getTime()
