@@ -1,13 +1,20 @@
 import dynamic from "next/dynamic";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { useRodizio } from "../../hooks/useRodizio";
-import { RodizioState, UpdaterState } from "../../shared";
+import MapPinIcon from "../../icons/MapIcon";
+import { RodizioState } from "../../shared";
 const ToolCycle = dynamic(() => import("../tool/ToolCycle"));
 import ToolDisplay from "../tool/ToolDisplay";
 
 function ToolHomePage() {
-	const { nextEvent, futureEvents, loaded, rodizioStatus, syncRodizio } =
-		useRodizio();
+	const {
+		nextEvent,
+		futureEvents,
+		rodizio,
+		loaded,
+		rodizioStatus,
+		syncRodizio,
+	} = useRodizio();
 
 	useEffect(() => {
 		syncRodizio();
@@ -19,7 +26,14 @@ function ToolHomePage() {
 			<ToolDisplay loaded={loaded} event={nextEvent} status={rodizioStatus} />
 
 			{rodizioStatus !== RodizioState.NOTFOUND && (
-				<ToolCycle loaded={loaded} list={futureEvents} />
+				<Fragment>
+					<ToolCycle loaded={loaded} list={futureEvents} />
+
+					<div className="flex flex-row justify-center space-x-4 w-full">
+						<MapPinIcon />
+						<span>{rodizio.location}</span>
+					</div>
+				</Fragment>
 			)}
 		</div>
 	);
