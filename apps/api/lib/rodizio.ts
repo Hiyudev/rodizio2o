@@ -118,7 +118,7 @@ export async function getRodizio(
 
 	const lastRestrictions = datas.slice(1, 6);
 	const predictRestriction = analyseRodizio(lastRestrictions);
-	const ref = nextRestrictions ?? hasCurrent
+	const ref = nextRestrictions.length >= 1 ? nextRestrictions : hasCurrent
 	let nextRodizios: IRodizio[] = predictRodizio(ref, predictRestriction)
 
 	return {
