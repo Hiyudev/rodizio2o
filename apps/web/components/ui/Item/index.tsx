@@ -8,13 +8,13 @@ interface IItem {
 
 function Item({ icon, title, description }: IItem) {
 	return (
-		<li className={s.item}>
+		<dl className={s.item}>
 			<dt>
 				<div className={s.item_icon}>{icon}</div>
 				<p className={s.item_title}>{title}</p>
 			</dt>
 			<dd className={s.item_description}>{description}</dd>
-		</li>
+		</dl>
 	);
 }
 

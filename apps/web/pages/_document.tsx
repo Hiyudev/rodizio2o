@@ -8,7 +8,7 @@ class MyDocument extends Document {
 
 	render() {
 		return (
-			<Html>
+			<Html lang="pt-br">
 				<Head>
 					<meta name="application-name" content="Rodizio2O" />
 					<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -19,7 +19,7 @@ class MyDocument extends Document {
 					<meta name="apple-mobile-web-app-title" content="Rodizio2O" />
 					<meta
 						name="description"
-						content="Veja o rodízio de água com apenas um toque"
+						content="Veja o rodízio de água de Curitiba com apenas um toque"
 					/>
 					<meta name="format-detection" content="telephone=no" />
 					<meta name="mobile-web-app-capable" content="yes" />
@@ -65,28 +65,37 @@ class MyDocument extends Document {
 					<link rel="shortcut icon" href="/favicon.ico" />
 
 					<meta name="twitter:card" content="summary" />
-					<meta name="twitter:url" content="https://yourdomain.com" />
-					<meta name="twitter:title" content="Rodizio2O" />
+					<meta name="twitter:url" content="https://rodizio2o.vercel.app/" />
+					<meta
+						name="twitter:title"
+						content="Rodizio2O - Veja o próximo rodízio de água"
+					/>
 					<meta
 						name="twitter:description"
-						content="Veja o rodízio de água com apenas um toque"
+						content="Veja o rodízio de água de Curitiba com apenas um toque"
 					/>
 					<meta
 						name="twitter:image"
-						content="https://yourdomain.com/image/Banner.png"
+						content="https://rodizio2o.vercel.app/image/Banner.png"
 					/>
 					<meta name="twitter:creator" content="@Yuki2dev" />
 					<meta property="og:type" content="website" />
-					<meta property="og:title" content="Rodizio2O" />
+					<meta
+						property="og:title"
+						content="Rodizio2O - Veja o próximo rodízio de água"
+					/>
 					<meta
 						property="og:description"
-						content="Veja o rodízio de água com apenas um toque"
+						content="Veja o rodízio de água de Curitiba com apenas um toque"
 					/>
-					<meta property="og:site_name" content="Rodizio2O" />
-					<meta property="og:url" content="https://yourdomain.com" />
+					<meta
+						property="og:site_name"
+						content="Rodizio2O - Veja o próximo rodízio de água"
+					/>
+					<meta property="og:url" content="https://rodizio2o.vercel.app/" />
 					<meta
 						property="og:image"
-						content="https://yourdomain.com/image/Banner.png"
+						content="https://rodizio2o.vercel.app/image/Banner.png"
 					/>
 
 					<link

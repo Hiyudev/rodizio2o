@@ -1,5 +1,17 @@
+import dynamic from "next/dynamic";
+import LoaderIcon from "../../icons/Loader";
 import WaveLayout from "../WaveLayout";
-import { App } from "tool";
+
+import s from "./tool.module.css";
+
+const App = dynamic(() => import("tool"), {
+	loading: () => (
+		<main className={s.loading}>
+			<LoaderIcon className="animate-spin" />
+		</main>
+	),
+	ssr: false,
+});
 
 const Tool = () => {
 	return (

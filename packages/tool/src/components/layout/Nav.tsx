@@ -25,6 +25,7 @@ function Navbar({ hasThemeSwitcher, currentPage, changePage }: INav) {
 	return (
 		<nav className="flex flex-row justify-end align-middle p-4">
 			<button
+				aria-label="Botão que redireciona para início"
 				className={`flex justify-center hover:text-blue-500 items-center w-[2.5rem] h-[2.5rem] transition-colors ${
 					currentPage === RodizioPages.Home ? activeClass : ""
 				}`}
@@ -34,6 +35,7 @@ function Navbar({ hasThemeSwitcher, currentPage, changePage }: INav) {
 			</button>
 
 			<button
+				aria-label="Botão que redireciona para a lista"
 				className={`flex justify-center hover:text-blue-500 items-center w-[2.5rem] h-[2.5rem] transition-colors ${
 					currentPage === RodizioPages.List ? activeClass : ""
 				}`}
@@ -43,6 +45,7 @@ function Navbar({ hasThemeSwitcher, currentPage, changePage }: INav) {
 			</button>
 
 			<button
+				aria-label="Botão que redireciona para configuração"
 				className={`flex justify-center hover:text-blue-500 items-center w-[2.5rem] h-[2.5rem] transition-colors ${
 					currentPage === RodizioPages.Config ? activeClass : ""
 				}`}

@@ -22,15 +22,17 @@ const Navbar = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [width]);
 
-	const list = (
-		<Fragment>
-			<li className={s.link}>
-				<Link href="/dev">Dev</Link>
-			</li>
-			{install && <Button onClick={install}>Baixe o aplicativo</Button>}
-			<ThemeSwitcher />
-		</Fragment>
-	);
+	const List = () => {
+		return (
+			<Fragment>
+				<li className={s.link}>
+					<Link href="/dev">Dev</Link>
+				</li>
+				{install && <Button onClick={install}>Baixe o aplicativo</Button>}
+				<ThemeSwitcher />
+			</Fragment>
+		);
+	};
 
 	return (
 		<Fragment>
@@ -42,10 +44,12 @@ const Navbar = () => {
 						</a>
 					</Link>
 
-					<ul className={s.navlist}>{list}</ul>
+					<ul className={s.navlist}>
+						<List />
+					</ul>
 
 					<div className={s.navmenu}>
-						<button onClick={() => setMobile(true)}>
+						<button aria-label="menu button" onClick={() => setMobile(true)}>
 							<Menu />
 						</button>
 					</div>
@@ -58,7 +62,9 @@ const Navbar = () => {
 						<Close />
 					</button>
 				</div>
-				<ul className={s.mobilelist}>{list}</ul>
+				<ul className={s.mobilelist}>
+					<List />
+				</ul>
 			</div>
 		</Fragment>
 	);

@@ -1,1 +1,2 @@
-export * from "./components/layout/App";
+import App from "./components/layout/App";
+export default App;

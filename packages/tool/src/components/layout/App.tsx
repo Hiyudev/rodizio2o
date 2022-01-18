@@ -5,8 +5,10 @@ interface IApp {
 	className: string;
 }
 
-export const App = ({ hasThemeSwitcher, className }: IApp) => {
+const App = ({ hasThemeSwitcher, className }: IApp) => {
 	return (
 		<ToolContainer hasThemeSwitcher={hasThemeSwitcher} className={className} />
 	);
 };
+
+export default App;
