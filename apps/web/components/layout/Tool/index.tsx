@@ -16,7 +16,7 @@ const App = dynamic(() => import("tool"), {
 const Tool = () => {
 	return (
 		<WaveLayout>
-			<App hasThemeSwitcher={false} className="h-96 rounded-2xl" />
+			<App hasThemeSwitcher={false} className="min-h-96 rounded-2xl" />
 		</WaveLayout>
 	);
 };
