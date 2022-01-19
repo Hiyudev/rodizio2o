@@ -52,9 +52,9 @@ const RodizioContext = createContext({} as IRodizioContext);
 export const RodizioWrapper: React.FC = ({ children }) => {
 	const [address] = useAddress();
 
-	const [lastUpdate, setLastUpdate] = useLocalStorage<Date>(
+	const [lastUpdate, setLastUpdate] = useLocalStorage<Number>(
 		"@lastupdate",
-		new Date()
+		new Date().getTime()
 	);
 	const [lastAddress, setLastAddress] = useLocalStorage<IAddress>(
 		"@lastaddress",
@@ -93,7 +93,7 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 		if (systemStatus === UpdaterState.UPDATING) return;
 
 		const now = new Date();
-		const selfUpdate = TimeAdd(now, { hours: 3 });
+		const selfUpdate = TimeAdd(now, { hours: 3 }).getTime();
 
 		let { cep, num, street } = address;
 		if (
@@ -134,7 +134,7 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 		}
 
 		if (
-			lastUpdate < now ||
+			lastUpdate < now.getTime() ||
 			!isObjectSame(lastAddress, data) ||
 			isObjectEmpty(rodizio)
 		) {
