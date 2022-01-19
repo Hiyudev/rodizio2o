@@ -157,9 +157,9 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 				cep = cep.trim().replaceAll("-", "");
 				num = num.trim();
 
-				url = `http://localhost:3001/api/rodizio/${cep}/${num}`;
+				url = `https://rodizio2o-api.vercel.app/api/rodizio/${cep}/${num}`;
 			} else {
-				url = `http://localhost:3001/api/rodizio?address=${street}`;
+				url = `https://rodizio2o-api.vercel.app/api/rodizio?address=${street}`;
 			}
 
 			try {
