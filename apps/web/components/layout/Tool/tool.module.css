@@ -1,3 +1,7 @@
 .loading {
-	@apply flex flex-col justify-center items-center w-full h-full bg-gray-100 dark:bg-gray-900;
+	@apply flex flex-col justify-center items-center w-full h-32 bg-gray-100;
+}
+
+:global(.dark) .loading {
+	@apply bg-gray-900;
 }
