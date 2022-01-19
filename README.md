@@ -51,6 +51,11 @@
   
 </p>
 
+## Screenshots
+
+<img src="github\Screenshot1.png">
+<img src="github\Screenshot2.png">
+
 ## Installation
 
 1. First, clone this repository
