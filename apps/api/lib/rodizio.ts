@@ -1,5 +1,6 @@
 import { TimeAdd, TimeIn, Timeleft, TimeSub } from "../utils/date";
 import { getAddress, getSuggestions, findAddress, getCodope, getByCodope } from "./api";
+import { isObjectEmpty, isObjectSame } from "./object";
 
 
 export interface IRodizio {
@@ -117,9 +118,16 @@ export async function getRodizio(
 	const lastRestrictions = datas.slice(1, 6);
 	const predictRestriction = analyseRodizio(lastRestrictions);
 
-	const isRefNext = nextRestrictions.length >= 1
-	const ref = isRefNext ? nextRestrictions : hasCurrent
-	let nextRodizios: IRodizio[] = predictRodizio(ref, predictRestriction, !isRefNext)
+	let ref: IRodizio[];
+
+	if (nextRestrictions.length > 0) {
+		ref = nextRestrictions
+	} else if (hasCurrent.length > 0) {
+		ref = hasCurrent
+	} else {
+		ref = lastRestrictions
+	}
+	let nextRodizios: IRodizio[] = predictRodizio(ref, predictRestriction, currentRodizio)
 
 
 	return {
@@ -153,22 +161,44 @@ function analyseRodizio(lastRodizio: IRodizio[]): number {
 	return Number(predictor);
 }
 
-function predictRodizio(list: IRodizio[], distance: number, ignoreFirst: boolean): IRodizio[] {
-	let nextRestrictions: IRodizio[] = [...list];
+function predictRodizio(list: IRodizio[], distance: number, current: IRodizio): IRodizio[] {
+	const now = new Date().getTime();
+	let refs: IRodizio[] = [...list];
+	let nextRestrictions: IRodizio[] = [];
+	let initialRef = refs[refs.length - 1];
+	let anchorRef = [];
+
 	let ignored = false;
+	let needIgnore = current !== null && !isObjectEmpty(current) && isObjectSame(initialRef, current)
 
-	for (let i = 1; nextRestrictions.length <= 3; i++) {
-		const ref = nextRestrictions[nextRestrictions.length - 1];
+	while (nextRestrictions.length <= 3) {
+		let ref: IRodizio;
+		if (nextRestrictions.length > 0) {
+			ref = nextRestrictions[nextRestrictions.length - 1]
+		} else if (anchorRef.length > 0) {
+			ref = anchorRef[anchorRef.length - 1];
+		} else {
+			ref = initialRef;
+		}
 		const { INICIO, RETOMADA, NORMALIZACAO } = ref;
-		const multiplicator = i + 1
 
-		const nextInicio = TimeAdd(new Date(INICIO), { days: distance * multiplicator }).getTime()
-		const nextRetomada = TimeAdd(new Date(RETOMADA), { days: distance * multiplicator }).getTime()
+		const nextInicio = TimeAdd(new Date(INICIO), { days: distance }).getTime()
+		const nextRetomada = TimeAdd(new Date(RETOMADA), { days: distance }).getTime()
 		const nextNormalizacao = TimeAdd(new Date(NORMALIZACAO), {
-			days: distance * multiplicator,
+			days: distance,
 		}).getTime()
 
-		if (!ignored && ignoreFirst) {
+		if (nextInicio < now) {
+			anchorRef.push({
+				INICIO: nextInicio,
+				RETOMADA: nextRetomada,
+				NORMALIZACAO: nextNormalizacao,
+			})
+			continue;
+		};
+
+
+		if (!ignored && needIgnore) {
 			ignored = true;
 			nextRestrictions.shift()
 		}
