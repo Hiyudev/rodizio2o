@@ -35,7 +35,7 @@ describe("Test rodizio API", () => {
 
 		if (res.current) {
 			const start = new Date(res.current.INICIO);
-			const end = new Date(res.current.RETOMADA);
+			const end = new Date(res.current.NORMALIZACAO);
 			expect(now).toBeBetween(start, end);
 		} else {
 			expect(res.current).toBeNull()
@@ -44,7 +44,7 @@ describe("Test rodizio API", () => {
 		expect(res.next).toHaveLength(4);
 
 		res.next.map(v => {
-			expect(v.INICIO).toBeAfter(now);
+			expect(new Date(v.INICIO)).toBeAfter(now);
 		})
 
 		expect(res.observation).toBeDefined();
@@ -58,7 +58,7 @@ describe("Test rodizio API", () => {
 
 		if (res.current) {
 			const start = new Date(res.current.INICIO);
-			const end = new Date(res.current.RETOMADA);
+			const end = new Date(res.current.NORMALIZACAO);
 			expect(now).toBeBetween(start, end);
 		} else {
 			expect(res.current).toBeNull()
@@ -67,7 +67,7 @@ describe("Test rodizio API", () => {
 		expect(res.next).toHaveLength(4);
 
 		res.next.map(v => {
-			expect(v.INICIO).toBeAfter(now);
+			expect(new Date(v.INICIO)).toBeAfter(now);
 		})
 
 		expect(res.observation).toBeDefined();

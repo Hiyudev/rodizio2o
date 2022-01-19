@@ -11,19 +11,18 @@ const testRodizioResponse = (res) => {
 
 	if (data.current) {
 		const start = new Date(data.current.INICIO);
-		const end = new Date(data.current.RETOMADA);
+		const end = new Date(data.current.NORMALIZACAO);
 		expect(now).toBeBetween(start, end);
 		expect(data.next[0].INICIO).not.toEqual(start.getTime())
-		expect(data.next[0].RETOMADA).not.toEqual(end.getTime())
+		expect(data.next[0].NORMALIZACAO).not.toEqual(end.getTime())
 	} else {
 		expect(data.current).toBeNull();
 	}
 
-
 	expect(data.next).toHaveLength(4);
 
 	data.next.forEach(v => {
-		expect(v.INICIO).toBeAfter(now);
+		expect(new Date(v.INICIO)).toBeAfter(now);
 	})
 
 	expect(data.observation).toBeDefined();
@@ -65,7 +64,7 @@ describe('Test API Suggestion routes', () => {
 })
 
 describe.each([
-	"80040-330", "82100-080", "82560-260", "80220-150"
+	"80040-330", "82100-080", "82560-260", "80220-150", "81250320"
 ])("Test API Routes for %i", (cep) => {
 	it("is API Route [?cep=...?num=...] for rodizio data working", async () => {
 		const { req, res } = createMocks({
