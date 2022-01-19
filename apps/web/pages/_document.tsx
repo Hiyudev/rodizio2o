@@ -97,6 +97,10 @@ class MyDocument extends Document {
 						property="og:image"
 						content="https://rodizio2o.vercel.app/image/Banner.png"
 					/>
+					<meta
+						property="keywords"
+						content="rodizio de agua curitiba, rodizio de agua, curitiba, sanepar"
+					/>
 
 					<link
 						rel="apple-touch-startup-image"

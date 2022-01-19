@@ -39,7 +39,7 @@ const Navbar = () => {
 			<Layout>
 				<nav className={s.nav}>
 					<Link href="/">
-						<a className={s.navlogo}>
+						<a aria-label="Home page button" className={s.navlogo}>
 							<Logo />
 						</a>
 					</Link>

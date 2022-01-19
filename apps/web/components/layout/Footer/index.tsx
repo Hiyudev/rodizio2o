@@ -15,7 +15,11 @@ const Footer = () => {
 			</div>
 
 			<div>
-				<a className={s.link} href="https://github.com/KeysHD/rodizio2o">
+				<a
+					aria-label="Project repository github"
+					className={s.link}
+					href="https://github.com/KeysHD/rodizio2o"
+				>
 					<Github />
 				</a>
 			</div>
@@ -32,18 +36,30 @@ const Footer = () => {
 
 				<ul className={s.creatorlist}>
 					<li>
-						<a className={s.link} href="https://github.com/KeysHD">
+						<a
+							aria-label="Creator github"
+							className={s.link}
+							href="https://portfolio-yuki2dev.vercel.app/social/github"
+						>
 							<Github />
 						</a>
 					</li>
 
 					<li>
-						<a className={s.link} href="https://twitter.com/Yuki2dev">
+						<a
+							aria-label="Creator twitter"
+							className={s.link}
+							href="https://portfolio-yuki2dev.vercel.app/social/twitter"
+						>
 							<Twitter />
 						</a>
 					</li>
 					<li>
-						<a className={s.link} href="https://portfolio-yuki2dev.vercel.app/">
+						<a
+							aria-label="Creator portfolio"
+							className={s.link}
+							href="https://portfolio-yuki2dev.vercel.app/"
+						>
 							<KeysIcon />
 						</a>
 					</li>
