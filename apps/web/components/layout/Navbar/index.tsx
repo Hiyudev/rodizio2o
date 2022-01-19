@@ -28,8 +28,16 @@ const Navbar = () => {
 				<li className={s.link}>
 					<Link href="/dev">Dev</Link>
 				</li>
-				{install && <Button onClick={install}>Baixe o aplicativo</Button>}
-				<ThemeSwitcher />
+				{install && (
+					<li>
+						<Button aria-label="PWA install button" onClick={install}>
+							Baixe o aplicativo
+						</Button>
+					</li>
+				)}
+				<li>
+					<ThemeSwitcher />
+				</li>
 			</Fragment>
 		);
 	};
@@ -58,7 +66,10 @@ const Navbar = () => {
 
 			<div hidden={!isMobile} className={s.mobile}>
 				<div className={s.mobilemenu}>
-					<button onClick={() => setMobile(false)}>
+					<button
+						aria-label="close menu button"
+						onClick={() => setMobile(false)}
+					>
 						<Close />
 					</button>
 				</div>

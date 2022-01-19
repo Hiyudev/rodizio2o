@@ -18,7 +18,7 @@ const ThemeSwitcher = () => {
 	};
 
 	return (
-		<button onClick={switchTheme}>
+		<button aria-label="Theme switcher button" onClick={switchTheme}>
 			{isMounted && theme === "light" ? <Sun /> : <Moon />}
 		</button>
 	);
