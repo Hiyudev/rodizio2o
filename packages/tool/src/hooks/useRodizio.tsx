@@ -108,7 +108,7 @@ export const RodizioWrapper: React.FC = ({ children }) => {
 			return setRodizioError("Nenhum endereço foi encontrado");
 		}
 
-		cep = cep.trim().replaceAll("-", "");
+		cep = cep.trim().replace("-", "");
 		num = num.trim();
 
 		if (mode === Modes.CEPNUM && cep.length !== 8) {

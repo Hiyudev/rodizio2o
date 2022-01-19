@@ -13,7 +13,7 @@ export default async function staticRodiziohandler(req, res) {
 	await cors(req, res);
 
 	let { cep, num, address } = req.query;
-	cep = cep.replaceAll("-", "");
+	cep = cep.replace("-", "");
 
 	try {
 		let apires;
