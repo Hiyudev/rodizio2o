@@ -12,9 +12,8 @@ const cors = initMiddleware(
 export default async function staticRodiziohandler(req, res) {
 	await cors(req, res);
 
-	const cep = req.query.cep.replaceAll("-", "");
-	const num = req.query.num;
-	let address = req.query.address;
+	let { cep, num, address } = req.query;
+	cep = cep.replaceAll("-", "");
 
 	try {
 		let apires;

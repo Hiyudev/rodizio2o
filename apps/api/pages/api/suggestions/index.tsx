@@ -12,7 +12,7 @@ const cors = initMiddleware(
 export default async function suggestionHandler(req, res) {
 	await cors(req, res);
 
-	const search = req.query.search;
+	const { search } = req.query;
 
 	let suggestions = await getSuggestions(search);
 	let resBody = [];
