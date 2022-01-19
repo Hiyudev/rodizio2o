@@ -13,7 +13,7 @@ export default async function rodizioHandler(req, res) {
 	await cors(req, res);
 
 	let { cep, num, address } = req.query;
-	cep = cep.replace("-", "");
+	cep = cep?.replace("-", "");
 
 	try {
 		let apires;
