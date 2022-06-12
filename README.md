@@ -10,6 +10,10 @@
 
 ---
 
+> ⚠️ This project no longer works due to normalization of water.
+
+---
+
 <p align="center">
 	<img alt="Vercel API deploy" src="https://img.shields.io/github/deployments/KeysHD/rodizio2o/Production%20%E2%80%93%20rodizio2o?label=api&logo=vercel&style=for-the-badge">
 	<img alt="Vercel Website deploy" src="https://img.shields.io/github/deployments/KeysHD/rodizio2o/Production%20%E2%80%93%20rodizio2o-api?label=website&logo=vercel&style=for-the-badge">
