@@ -1,12 +1,8 @@
 <p align="center">
-  <img src="github\Logo.png">
-  <img src="github\Banner.png">
+  <img src=".github/Logo.png">
 </p>
 
-<p align="center">
-  <h1>Rodizio2O</h1>
-  <p>Rodizio2O its a open-source application to check the next water restriction in an easier way.</p>
-</p>
+<img src=".github/Mockup.png"/>
 
 ---
 
@@ -26,28 +22,33 @@
 </p>
 
 <p align="center">
+ <a href="#about">About</a> • 
+ <a href="#idea">Idea / Solution</a> • 
+ <a href="#nolonger">Why no longer works?</a> • 
  <a href="#features">Features</a> • 
- <a href="#technology">Technology</a> •
- <a href="#installation">Installation</a> 
+ <a href="#built">Technologies</a> •
+ <a href="#started">Getting started</a> 
 </p>
 
-## Features
+### 🧐 About <a name="about"></a>
+Rodizio2O its a open-source application to check the next water restriction in an easier way.
+
+#### 💡 Idea / Solution <a name="idea"></a>
+The idea behind this project was to make a website to be easily accessed by everyone to see the following restriction on water. The official website provided by the government was buggy and was not mobile-friendly. And it was really difficult to check fast because of the redundancy of inserting the address every time you wanted to see it.
+
+#### ⛓️ Why no longer works? <a name="nolonger"></a>
+The reason behing of why this project no longer works is because, after the official release, it was announced on the same day by the government that the restrictions were over by the following week.
+
+### 🚀 Features <a name="features"></a>
 
 - Consuming Rodizio API to check the next water restriction.
 - Prediction system when the API does not provide a date.
 - Saving data locally, making faster to use and see the important data.
 - PWA for desktop / mobile web applications.
 
-## TODO
+### ⛏️ Built with <a name="built"></a>
 
-- [x] Website
-- [x] PWA
-- [ ] Chrome extension
-- [ ] Desktop application
-
-## Technology
-
-<p align="left">
+<p id="technology" align="left">
   <img alt="Typescript" src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"/>
   <img alt="React" src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB"/>
   <img alt="TailwindCSS" src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/>
@@ -56,14 +57,11 @@
   
 </p>
 
-## Screenshots
+### 🏁 Getting started <a name="started"></a>
 
-<img src="github\Screenshot1.png">
-<img src="github\Screenshot2.png">
+### Installing
 
-## Installation
-
-1. First, clone this repository
+1. First, clone or download this repository
 
 ```bash
 git clone https://github.com/KeysHD/rodizio2o.git
@@ -84,9 +82,9 @@ yarn dev
 4. Navigate to `https://localhost:3000` to view the website
 5. Send requests to `https://localhost:3001` to get API data
 
-## Documentation API
+### 📘 Documentation API <a name="api"></a>
 
-#### Get restriction water data
+#### GET restriction water data
 
 ```http
   GET /api/rodizio/${cep}/${number}
@@ -111,6 +109,6 @@ yarn dev
 | :-------- | :------- | :---------------------------------------------------------- |
 | `street`  | `string` | **Required**. Address of the place where you want to search |
 
-## License
+### 📖 License
 
 [MIT](https://choosealicense.com/licenses/mit/)
