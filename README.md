@@ -1,25 +1,14 @@
 <p align="center">
-  <img src=".github/Logo.png">
+	<img src=".github/Mockup.png" alt="Project mockup"/>
+  <h1 align="center">Rodizio2o</h1>
+  <p align="center">Open-source application to check the next water restriction in an easier way.</p>
 </p>
-
-<img src=".github/Mockup.png"/>
 
 ---
 
-> ⚠️ This project no longer works due to normalization of water.
+> ⚠️ This project no longer is maintained and is not working due to the normalization of water.
 
 ---
-
-<p align="center">
-	<img alt="Vercel API deploy" src="https://img.shields.io/github/deployments/KeysHD/rodizio2o/Production%20%E2%80%93%20rodizio2o?label=api&logo=vercel&style=for-the-badge">
-	<img alt="Vercel Website deploy" src="https://img.shields.io/github/deployments/KeysHD/rodizio2o/Production%20%E2%80%93%20rodizio2o-api?label=website&logo=vercel&style=for-the-badge">
-</p>
-
-<p align="center">
-    <a href="https://rodizio2o.vercel.app/">
-    <img alt="Website" src="https://img.shields.io/static/v1?message=visit%20now&color=1d4ed8&label=website&labelColor=121212&logo=vercel&style=for-the-badge"/>
-    </a>
-</p>
 
 <p align="center">
  <a href="#about">About</a> • 
@@ -31,8 +20,6 @@
 </p>
 
 ### 🧐 About <a name="about"></a>
-Rodizio2O its a open-source application to check the next water restriction in an easier way.
-
 #### 💡 Idea / Solution <a name="idea"></a>
 The idea behind this project was to make a website to be easily accessed by everyone to see the following restriction on water. The official website provided by the government was buggy and was not mobile-friendly. And it was really difficult to check fast because of the redundancy of inserting the address every time you wanted to see it.
 
@@ -111,4 +98,4 @@ yarn dev
 
 ### 📖 License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT License - Copyright (c) 2022 Kevin](https://choosealicense.com/licenses/mit/)
